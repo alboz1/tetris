@@ -1,5 +1,5 @@
 import { collide, rotate, reset } from './piece';
-import { mergeToBoard, grid } from './board';
+import { mergeToBoard, grid, sweepBoard } from './board';
 
 export const player = {
     x: 3,
@@ -29,6 +29,7 @@ export function playerDrop(piece) {
         player.x = 3;
         player.y = 0;
         checkGameOver();
+        sweepBoard();
     }
 }
 

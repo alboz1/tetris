@@ -1,7 +1,6 @@
 import { spawnPiece, curPiece } from './controllers/piece';
 import { playerDrop } from './controllers/player';
 import { getCanvas } from './lib/getCanvas';
-import { blocks } from './lib/createBlock';
 import { drawBoard } from './controllers/board';
 
 const blockSize = 30;
@@ -19,11 +18,11 @@ function play(time = 0) {
     lastTime = time;
     dropCounter += deltaTime;
     if (dropCounter > interval) {
-        playerDrop(blocks[curPiece]);
+        playerDrop(curPiece);
         dropCounter = 0;
     }
 
-    spawnPiece(curPiece);
+    spawnPiece();
     drawBoard({ x: 0, y: 0 });
     requestAnimationFrame(play);
 }

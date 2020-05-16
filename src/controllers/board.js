@@ -1,18 +1,22 @@
 import { player } from "./player";
-import { createRect } from '../lib/createRect';
-import { getCanvas } from "../lib/getCanvas";
+import { getCanvas } from '../lib/getCanvas';
+import { createPiece } from './piece';
 
 export const grid = Array.from({length: 20}, () => Array(10).fill(0));
 
 export function drawBoard(position) {
     const ctx = getCanvas();
-    grid.forEach((row, y) => {
-        row.forEach((value, x) => {
-            if (value > 0) {
-                createRect(ctx, 'white', position.x + x, position.y + y, 1, 1);
-            }
-        })
-    })
+    createPiece(ctx, grid, position.x, position.y);
+}
+
+export function sweepBoard() {
+    grid.forEach((row, index) => {
+        const lineClear = row.every(value => value > 0);
+        if (lineClear) {
+            const newRow = grid.splice(index, 1)[0].fill(0);
+            grid.unshift(newRow);
+        }
+    });
 }
 
 export function mergeToBoard(piece) {

@@ -1,21 +1,70 @@
-import { createBlock, blocks } from "../lib/createBlock";
-import { getCanvas } from "../lib/getCanvas";
+import { createRect } from '../lib/createRect';
+import { getCanvas } from '../lib/getCanvas';
 import { player, playerDrop, playerMove, playerRotate } from './player';
 import { grid } from './board';
 
+const blocks = [
+    [
+        [0, 0, 0, 0],
+        [1, 1, 1, 1],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+    ],
+    [
+        [2, 0, 0],
+        [2, 2, 2],
+        [0, 0, 0]
+    ],
+    [
+        [0, 0, 3],
+        [3, 3, 3],
+        [0, 0, 0]
+    ],
+    [
+        [4, 4],
+        [4, 4]
+    ],
+    [
+        [0, 5, 5],
+        [5, 5, 0],
+        [0, 0, 0]
+    ],
+    [
+        [0, 6, 0],
+        [6, 6, 6],
+        [0, 0, 0]
+    ],
+    [
+        [7, 7, 0],
+        [0, 7, 7],
+        [0, 0, 0]
+    ]
+];
+
+export const colors = [
+    null,
+    '#6a97de',
+    '#6a74de',
+    '#debb6a',
+    '#d6de6a',
+    '#8dde6a',
+    '#ae6ade',
+    '#db3737'
+];
+
 const pieces = ['I', 'J', 'L', 'O', 'S', 'T', 'Z'];
-export let curPiece = pieces[Math.floor(Math.random() * pieces.length)];
+export let curPiece = blocks[Math.floor(Math.random() * pieces.length)];
 
 export function spawnPiece() {
     const ctx = getCanvas();
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    createBlock(curPiece, player.x, player.y);
+    createPiece(ctx, curPiece, player.x, player.y);
 }
 
 export function collide() {
-    for (let y = 0; y < blocks[curPiece].length; ++y) {
-        for (let x = 0; x < blocks[curPiece][y].length; ++x) {
-            if (blocks[curPiece][y][x] !== 0 && (grid[y + player.y] && grid[y + player.y][x + player.x]) !== 0) {
+    for (let y = 0; y < curPiece.length; ++y) {
+        for (let x = 0; x < curPiece[y].length; ++x) {
+            if (curPiece[y][x] !== 0 && (grid[y + player.y] && grid[y + player.y][x + player.x]) !== 0) {
                 return true;
             }
         }
@@ -24,27 +73,37 @@ export function collide() {
 }
 
 export function reset() {
-    curPiece = pieces[Math.floor(Math.random() * pieces.length)];
+    curPiece = blocks[Math.floor(Math.random() * pieces.length)];
 }
 
 export function rotate(direction) {
-    for (let y = 0; y < blocks[curPiece].length; ++y) {
+    for (let y = 0; y < curPiece.length; ++y) {
         for (let x = 0; x < y; ++x) {
             [
-                blocks[curPiece][x][y],
-                blocks[curPiece][y][x],
+                curPiece[x][y],
+                curPiece[y][x],
             ] = [
-                blocks[curPiece][y][x],
-                blocks[curPiece][x][y],
+                curPiece[y][x],
+                curPiece[x][y],
             ]
         }
     }
 
     if (direction > 0) {
-        blocks[curPiece].forEach(row => row.reverse());
+        curPiece.forEach(row => row.reverse());
     } else {
-        blocks[curPiece].reverse();
+        curPiece.reverse();
     }
+}
+
+export function createPiece(ctx, matrix, posX, posY) {
+    matrix.forEach((row, y) => {
+        row.forEach((value, x) => {
+            if (value > 0) {
+                createRect(ctx, colors[value], posX + x, posY + y, 0.95, 0.95);
+            }
+        });
+    });
 }
 
 export function movePiece(event) {
@@ -61,11 +120,11 @@ export function movePiece(event) {
     } else if (keys.right === event.keyCode) {
         playerMove(1);
     } else if (keys.down === event.keyCode) {
-        playerDrop(blocks[curPiece]);
+        playerDrop(curPiece);
     } else if (keys.rotateCCW === event.keyCode) {
-        playerRotate(blocks[curPiece], -1);
+        playerRotate(curPiece, -1);
     } else if (keys.rotateCW === event.keyCode) {
-        playerRotate(blocks[curPiece], 1);
+        playerRotate(curPiece, 1);
     }
 }
 
