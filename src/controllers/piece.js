@@ -1,6 +1,6 @@
 import { createRect } from '../lib/createRect';
 import { getCanvas } from '../lib/getCanvas';
-import { player, playerDrop, playerMove, playerRotate } from './player';
+import { player, playerDrop, playerMove, playerRotate, hardDrop } from './player';
 import { grid } from './board';
 
 const blocks = [
@@ -74,11 +74,15 @@ export function collide() {
 
 export function reset() {
     curPiece = blocks[Math.floor(Math.random() * pieces.length)];
+    //put piece in the center of the board
+    player.x = (grid[0].length / 2 | 0) - (curPiece[0].length / 2 | 0);
+    player.y = 0;
 }
 
 export function rotate(direction) {
     for (let y = 0; y < curPiece.length; ++y) {
         for (let x = 0; x < y; ++x) {
+            //switch columns and rows
             [
                 curPiece[x][y],
                 curPiece[y][x],
@@ -111,8 +115,11 @@ export function movePiece(event) {
         left: 37,
         right: 39,
         down: 40,
-        rotateCCW: 90,
-        rotateCW: 88
+        //rotate counter clock btn
+        z: 90,
+        //rotate clock wise btn
+        x: 88,
+        space: 32
     }
 
     if (keys.left === event.keyCode) {
@@ -121,11 +128,11 @@ export function movePiece(event) {
         playerMove(1);
     } else if (keys.down === event.keyCode) {
         playerDrop(curPiece);
-    } else if (keys.rotateCCW === event.keyCode) {
-        playerRotate(curPiece, -1);
-    } else if (keys.rotateCW === event.keyCode) {
+    } else if (keys.z === event.keyCode) {
         playerRotate(curPiece, 1);
+    } else if (keys.x === event.keyCode) {
+        playerRotate(curPiece, -1);
+    } else if (keys.space === event.keyCode) {
+        hardDrop(curPiece);
     }
 }
-
-document.addEventListener('keydown', movePiece);

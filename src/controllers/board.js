@@ -1,4 +1,4 @@
-import { player } from "./player";
+import { player } from './player';
 import { getCanvas } from '../lib/getCanvas';
 import { createPiece } from './piece';
 

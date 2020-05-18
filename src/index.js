@@ -1,15 +1,15 @@
 import { spawnPiece, curPiece } from './controllers/piece';
-import { playerDrop } from './controllers/player';
+import { playerDrop, hardDrop } from './controllers/player';
 import { getCanvas } from './lib/getCanvas';
 import { drawBoard } from './controllers/board';
 
-const blockSize = 30;
+const blockSize = 32;
 const ctx = getCanvas();
 ctx.canvas.width = 10 * blockSize;
 ctx.canvas.height = 20 * blockSize;
 ctx.scale(blockSize, blockSize);
 
-let dropCounter = 0;
+export let dropCounter = 0;
 let interval = 1000;
 let lastTime = 0;
 

@@ -1,4 +1,4 @@
-import { collide, rotate, reset } from './piece';
+import { collide, rotate, reset, movePiece } from './piece';
 import { mergeToBoard, grid, sweepBoard } from './board';
 
 export const player = {
@@ -26,11 +26,20 @@ export function playerDrop(piece) {
         player.y--;
         mergeToBoard(piece);
         reset();
-        player.x = 3;
-        player.y = 0;
         checkGameOver();
         sweepBoard();
     }
+}
+
+export function hardDrop(piece) {
+    while (!collide()) {
+        player.y++;
+    }
+    player.y--;
+    mergeToBoard(piece);
+    reset();
+    checkGameOver();
+    sweepBoard();
 }
 
 export function playerRotate(piece, direction) {
@@ -49,3 +58,5 @@ export function playerRotate(piece, direction) {
         }
     }
 }
+
+document.addEventListener('keydown', movePiece);
