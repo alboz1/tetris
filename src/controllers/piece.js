@@ -77,6 +77,10 @@ export function reset() {
     //put piece in the center of the board
     player.x = (grid[0].length / 2 | 0) - (curPiece[0].length / 2 | 0);
     player.y = 0;
+
+    if (collide()) {
+        player.gameOver = true;
+    }
 }
 
 export function rotate(direction) {
