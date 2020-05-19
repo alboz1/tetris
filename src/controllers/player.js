@@ -4,7 +4,8 @@ import { grid, mergeToBoard, sweepBoard, drawBoard } from './board';
 export const player = {
     x: 3,
     y: 0,
-    gameOver: false
+    gameOver: false,
+    score: 0
 }
 
 export function playerMove(direction) {
@@ -53,6 +54,24 @@ export function playerRotate(piece, direction) {
     }
 }
 
+//add scores
+export function addScore(linesCleared) {
+    const scoreElement = document.querySelector('.score');
+
+    if (linesCleared === 1) {
+        player.score += 40;
+    } else if (linesCleared === 2) {
+        player.score += 100;
+    } else if (linesCleared === 3) {
+        player.score += 300;
+    } else if (linesCleared >= 4) {
+        player.score += 1200;
+    }
+    
+    scoreElement.textContent = player.score;
+}
+
+
 let dropCounter = 0;
 let interval = 1000;
 let lastTime = 0;
@@ -64,6 +83,7 @@ export function play(time = 0) {
         info.textContent = 'Game over';
         gameOverOverlay.style.display = 'flex';
         grid.forEach(row => row.fill(0));
+        player.score = 0;
         return;
     }
     const deltaTime = time - lastTime;
