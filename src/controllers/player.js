@@ -1,4 +1,4 @@
-import { collide, rotate, reset, movePiece, spawnPiece, curPiece } from './piece';
+import { collide, rotate, reset, spawnPiece, curPiece, preview } from './piece';
 import { grid, mergeToBoard, sweepBoard, drawBoard } from './board';
 
 export const player = {
@@ -10,15 +10,18 @@ export const player = {
 
 export function playerMove(direction) {
     player.x += direction;
-    if (collide()) {
+    preview.x += direction;
+    if (collide(curPiece, player)) {
         player.x -= direction;
+        preview.x -= direction;
     }
 }
 
 export function playerDrop(piece) {
     if (player.gameOver) return;
     player.y++;
-    if (collide()) {
+    
+    if (collide(curPiece, player)) {
         player.y--;
         mergeToBoard(piece);
         reset();
@@ -28,7 +31,7 @@ export function playerDrop(piece) {
 
 export function hardDrop(piece) {
     if (player.gameOver) return;
-    while (!collide()) {
+    while (!collide(curPiece, player)) {
         player.y++;
     }
     player.y--;
@@ -42,19 +45,20 @@ export function playerRotate(piece, direction) {
     let offset = 1;
 
     rotate(direction);
-    while (collide()) {
+    while (collide(curPiece, player)) {
         player.x += offset;
+        preview.x += offset;
         offset = -(offset + (offset > 0 ? 1 : -1));
-
         if (offset > piece[0].length) {
             rotate(-direction);
             player.x = position;
+            preview.x = position;
             return;
         }
     }
 }
 
-//add scores
+//add score
 export function addScore(linesCleared) {
     const scoreElement = document.querySelector('.score');
 
@@ -86,6 +90,7 @@ export function play(time = 0) {
         player.score = 0;
         return;
     }
+
     const deltaTime = time - lastTime;
     lastTime = time;
     dropCounter += deltaTime;
@@ -93,7 +98,7 @@ export function play(time = 0) {
         playerDrop(curPiece);
         dropCounter = 0;
     }
-
+    
     spawnPiece();
     drawBoard({ x: 0, y: 0 });
     requestAnimationFrame(play);

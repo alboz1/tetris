@@ -43,13 +43,13 @@ const blocks = [
 
 export const colors = [
     null,
-    '#6a97de',
-    '#6a74de',
-    '#debb6a',
-    '#d6de6a',
-    '#8dde6a',
-    '#ae6ade',
-    '#db3737'
+    '#33ACFE',
+    '#7ac9ff',
+    '#edff7a',
+    '#ffca7a',
+    '#81ff7a',
+    '#bd7aff',
+    '#ff3838'
 ];
 
 const pieces = ['I', 'J', 'L', 'O', 'S', 'T', 'Z'];
@@ -59,12 +59,14 @@ export function spawnPiece() {
     const ctx = getCanvas();
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     createPiece(ctx, curPiece, player.x, player.y);
+
+    piecePreview();
 }
 
-export function collide() {
-    for (let y = 0; y < curPiece.length; ++y) {
-        for (let x = 0; x < curPiece[y].length; ++x) {
-            if (curPiece[y][x] !== 0 && (grid[y + player.y] && grid[y + player.y][x + player.x]) !== 0) {
+export function collide(piece, offset) {
+    for (let y = 0; y < piece.length; ++y) {
+        for (let x = 0; x < piece[y].length; ++x) {
+            if (piece[y][x] !== 0 && (grid[y + offset.y] && grid[y + offset.y][x + offset.x]) !== 0) {
                 return true;
             }
         }
@@ -77,8 +79,11 @@ export function reset() {
     //put piece in the center of the board
     player.x = (grid[0].length / 2 | 0) - (curPiece[0].length / 2 | 0);
     player.y = 0;
-
-    if (collide()) {
+    preview.piece = curPiece;
+    preview.x = player.x;
+    preview.y = 0;
+    
+    if (collide(curPiece, player)) {
         player.gameOver = true;
     }
 }
@@ -94,6 +99,7 @@ export function rotate(direction) {
                 curPiece[y][x],
                 curPiece[x][y],
             ]
+
         }
     }
 
@@ -102,16 +108,41 @@ export function rotate(direction) {
     } else {
         curPiece.reverse();
     }
+    preview.piece = curPiece;
 }
 
 export function createPiece(ctx, matrix, posX, posY) {
     matrix.forEach((row, y) => {
         row.forEach((value, x) => {
             if (value > 0) {
-                createRect(ctx, colors[value], posX + x, posY + y, 0.95, 0.95);
+                createRect(ctx, colors[value], posX + x, posY + y, 1, 1);
             }
         });
     });
+}
+
+
+export const preview = {
+    piece: curPiece.slice(),
+    x: 3,
+    y: 0,
+}
+export function piecePreview() {
+    const ctx = getCanvas();
+    while (!collide(preview.piece, preview)) {
+        preview.y++;
+    }
+    if (collide(preview.piece, preview)) {
+        preview.y--;
+    }
+    preview.piece.forEach((row, y) => {
+        row.forEach((value, x) => {
+            if (value > 0) {
+                createRect(ctx, 'rgba(0, 0, 0, 0.5)', preview.x + x, preview.y + y, 1, 1);
+            }
+        });
+    });
+    preview.y = player.y;
 }
 
 export function movePiece(event) {
