@@ -1,4 +1,5 @@
-import { collide, rotate, reset, spawnPiece, curPiece, preview } from './piece';
+import { collide, rotate, reset, spawnPiece, curPiece, preview, nextPiece } from './piece';
+import { showNextPiece } from '../views/showNextPiece';
 import { grid, mergeToBoard, sweepBoard, drawBoard } from './board';
 
 export const player = {
@@ -26,6 +27,7 @@ export function playerDrop(piece) {
         mergeToBoard(piece);
         reset();
         sweepBoard();
+        showNextPiece(nextPiece);
     }
 }
 
@@ -38,6 +40,7 @@ export function hardDrop(piece) {
     mergeToBoard(piece);
     reset();
     sweepBoard();
+    showNextPiece(nextPiece);
 }
 
 export function playerRotate(piece, direction) {
@@ -60,8 +63,8 @@ export function playerRotate(piece, direction) {
 
 //add score
 export function addScore(linesCleared) {
-    const scoreElement = document.querySelector('.score');
-
+    const scoreElement = document.querySelector('#score');
+    
     if (linesCleared === 1) {
         player.score += 40;
     } else if (linesCleared === 2) {

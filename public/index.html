@@ -6,6 +6,9 @@
     <title>Tetris</title>
 </head>
 <style>
+    * {
+        box-sizing: border-box;
+    }
     body {
         background: #222222;
         margin: 0;
@@ -13,6 +16,10 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+    .container {
+        padding: 1.3rem 0;
+        width: 260px;
     }
     .canvas-container #canvas {
         background:#0a0c12;
@@ -41,22 +48,44 @@
         cursor: pointer;
     }
 
-    .container {
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-    }
-    .info-container {
-        margin-left: 5rem;
-        color: #ffffff;
-        font-size: 2rem;  
-    }
     .play-btn {
         padding: 1rem 1.5rem;
+    }
+
+    .info-container {
+        color: #ffffff;
+        display: flex;
+        justify-content: space-between;
+        text-align: center;
+        width: 100%;
+        background:#0a0c12;
+    }
+    .info-container .score-screen {
+        flex: 1;
+        background:#0a0c12;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50px;
+    }
+    .info-container > div {
+        flex: 1;
     }
 </style>
 <body>
     <main class="container">
+        <div class="info-container">
+            <div class="score">
+                <span>Score</span>
+                <div class="score-screen">
+                    <span id="score">0</span>
+                </div>
+            </div>
+            <div class="next-piece-container">
+                <span>Next</span>
+                <canvas id="next-piece"></canvas>
+            </div>
+        </div>
         <section class="canvas-container">
             <canvas id="canvas"></canvas>
             <div class="game-over-overlay">
@@ -65,9 +94,6 @@
                     <button class="play-btn">Play</button>
                 </div>
             </div>
-        </section>
-        <section class="info-container">
-            <p>Score: <span class="score">0</span></p>
         </section>
     </main>
     <script src="main.js"></script>

@@ -3,7 +3,7 @@ import { getCanvas } from '../lib/getCanvas';
 import { player, playerDrop, playerMove, playerRotate, hardDrop } from './player';
 import { grid } from './board';
 
-const blocks = [
+export const blocks = [
     [
         [0, 0, 0, 0],
         [1, 1, 1, 1],
@@ -52,14 +52,14 @@ export const colors = [
     '#ff3838'
 ];
 
-const pieces = ['I', 'J', 'L', 'O', 'S', 'T', 'Z'];
+export const pieces = ['I', 'J', 'L', 'O', 'S', 'T', 'Z'];
 export let curPiece = blocks[Math.floor(Math.random() * pieces.length)];
+export let nextPiece = getNextPiece();
 
 export function spawnPiece() {
     const ctx = getCanvas();
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     createPiece(ctx, curPiece, player.x, player.y);
-
     piecePreview();
 }
 
@@ -75,14 +75,15 @@ export function collide(piece, offset) {
 }
 
 export function reset() {
-    curPiece = blocks[Math.floor(Math.random() * pieces.length)];
+    curPiece = nextPiece;
     //put piece in the center of the board
     player.x = (grid[0].length / 2 | 0) - (curPiece[0].length / 2 | 0);
     player.y = 0;
     preview.piece = curPiece;
     preview.x = player.x;
     preview.y = 0;
-    
+    nextPiece = getNextPiece();
+
     if (collide(curPiece, player)) {
         player.gameOver = true;
     }
@@ -99,7 +100,6 @@ export function rotate(direction) {
                 curPiece[y][x],
                 curPiece[x][y],
             ]
-
         }
     }
 
@@ -143,6 +143,11 @@ export function piecePreview() {
         });
     });
     preview.y = player.y;
+}
+
+export function getNextPiece() {
+    const nextPiece = blocks[Math.floor(Math.random() * pieces.length)];
+    return nextPiece;
 }
 
 export function movePiece(event) {
