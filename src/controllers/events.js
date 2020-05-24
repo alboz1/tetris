@@ -1,14 +1,14 @@
 import { player, play } from './player';
 import { showNextPiece } from '../views/showNextPiece';
 import { movePiece, nextPiece } from './piece';
+import { hideOverlay } from '../views/overlay';
 
 export function events() {
-    const playBtn = document.querySelector('.game-over-info .play-btn');
+    const playBtn = document.querySelector('.overlay-info .play-btn');
     playBtn.addEventListener('click', () => {
-        const gameOverOverlay = document.querySelector('.game-over-overlay');
-        const scoreElement = document.querySelector('#score');
-        gameOverOverlay.style.display = 'none';
+        hideOverlay();
         if (player.gameOver) {
+            const scoreElement = document.querySelector('#score');
             scoreElement.textContent = player.score;
             player.gameOver = false;
         }

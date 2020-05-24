@@ -1,6 +1,8 @@
 import { collide, rotate, reset, spawnPiece, curPiece, preview, nextPiece } from './piece';
 import { showNextPiece } from '../views/showNextPiece';
 import { grid, mergeToBoard, sweepBoard, drawBoard } from './board';
+import { showScore } from '../views/showScore';
+import { showOverlay } from '../views/overlay';
 
 export const player = {
     x: 3,
@@ -47,13 +49,13 @@ export function playerRotate(piece, direction) {
     const position = player.x;
     let offset = 1;
 
-    rotate(direction);
+    rotate(piece, direction);
     while (collide(curPiece, player)) {
         player.x += offset;
         preview.x += offset;
         offset = -(offset + (offset > 0 ? 1 : -1));
         if (offset > piece[0].length) {
-            rotate(-direction);
+            rotate(piece, -direction);
             player.x = position;
             preview.x = position;
             return;
@@ -63,8 +65,6 @@ export function playerRotate(piece, direction) {
 
 //add score
 export function addScore(linesCleared) {
-    const scoreElement = document.querySelector('#score');
-    
     if (linesCleared === 1) {
         player.score += 40;
     } else if (linesCleared === 2) {
@@ -74,8 +74,7 @@ export function addScore(linesCleared) {
     } else if (linesCleared >= 4) {
         player.score += 1200;
     }
-    
-    scoreElement.textContent = player.score;
+    showScore();
 }
 
 
@@ -85,10 +84,7 @@ let lastTime = 0;
 
 export function play(time = 0) {
     if (player.gameOver) {
-        const gameOverOverlay = document.querySelector('.game-over-overlay');
-        const info = document.querySelector('.title');
-        info.textContent = 'Game over';
-        gameOverOverlay.style.display = 'flex';
+        showOverlay();
         grid.forEach(row => row.fill(0));
         player.score = 0;
         return;

@@ -2,64 +2,15 @@ import { createRect } from '../lib/createRect';
 import { getCanvas } from '../lib/getCanvas';
 import { player, playerDrop, playerMove, playerRotate, hardDrop } from './player';
 import { grid } from './board';
+import { draw } from '../lib/draw';
 
-export const blocks = [
-    [
-        [0, 0, 0, 0],
-        [1, 1, 1, 1],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0]
-    ],
-    [
-        [2, 0, 0],
-        [2, 2, 2],
-        [0, 0, 0]
-    ],
-    [
-        [0, 0, 3],
-        [3, 3, 3],
-        [0, 0, 0]
-    ],
-    [
-        [4, 4],
-        [4, 4]
-    ],
-    [
-        [0, 5, 5],
-        [5, 5, 0],
-        [0, 0, 0]
-    ],
-    [
-        [0, 6, 0],
-        [6, 6, 6],
-        [0, 0, 0]
-    ],
-    [
-        [7, 7, 0],
-        [0, 7, 7],
-        [0, 0, 0]
-    ]
-];
-
-export const colors = [
-    null,
-    '#33ACFE',
-    '#7ac9ff',
-    '#edff7a',
-    '#ffca7a',
-    '#81ff7a',
-    '#bd7aff',
-    '#ff3838'
-];
-
-export const pieces = ['I', 'J', 'L', 'O', 'S', 'T', 'Z'];
-export let curPiece = blocks[Math.floor(Math.random() * pieces.length)];
+export let curPiece = createPiece();
 export let nextPiece = getNextPiece();
 
 export function spawnPiece() {
     const ctx = getCanvas();
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    createPiece(ctx, curPiece, player.x, player.y);
+    draw(ctx, curPiece, { posX: player.x, posY: player.y });
     piecePreview();
 }
 
@@ -89,39 +40,73 @@ export function reset() {
     }
 }
 
-export function rotate(direction) {
-    for (let y = 0; y < curPiece.length; ++y) {
+export function rotate(piece, direction) {
+    for (let y = 0; y < piece.length; ++y) {
         for (let x = 0; x < y; ++x) {
             //switch columns and rows
             [
-                curPiece[x][y],
-                curPiece[y][x],
+                piece[x][y],
+                piece[y][x],
             ] = [
-                curPiece[y][x],
-                curPiece[x][y],
+                piece[y][x],
+                piece[x][y],
             ]
         }
     }
 
     if (direction > 0) {
-        curPiece.forEach(row => row.reverse());
+        piece.forEach(row => row.reverse());
     } else {
-        curPiece.reverse();
+        piece.reverse();
     }
-    preview.piece = curPiece;
+    preview.piece = piece;
 }
 
-export function createPiece(ctx, matrix, posX, posY) {
-    matrix.forEach((row, y) => {
-        row.forEach((value, x) => {
-            if (value > 0) {
-                createRect(ctx, colors[value], posX + x, posY + y, 1, 1);
-            }
-        });
-    });
+export function createPiece() {
+    const pieces = ['I', 'J', 'L', 'O', 'S', 'T', 'Z'];
+ 
+    const blocks = [
+        [
+            [0, 0, 0, 0],
+            [1, 1, 1, 1],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0]
+        ],
+        [
+            [2, 0, 0],
+            [2, 2, 2],
+            [0, 0, 0]
+        ],
+        [
+            [0, 0, 3],
+            [3, 3, 3],
+            [0, 0, 0]
+        ],
+        [
+            [4, 4],
+            [4, 4]
+        ],
+        [
+            [0, 5, 5],
+            [5, 5, 0],
+            [0, 0, 0]
+        ],
+        [
+            [0, 6, 0],
+            [6, 6, 6],
+            [0, 0, 0]
+        ],
+        [
+            [7, 7, 0],
+            [0, 7, 7],
+            [0, 0, 0]
+        ]
+    ];
+
+    return blocks[Math.floor(Math.random() * pieces.length)];
 }
 
-
+//piece preview
 export const preview = {
     piece: curPiece.slice(),
     x: 3,
@@ -146,7 +131,7 @@ export function piecePreview() {
 }
 
 export function getNextPiece() {
-    const nextPiece = blocks[Math.floor(Math.random() * pieces.length)];
+    const nextPiece = createPiece();
     return nextPiece;
 }
 

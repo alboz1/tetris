@@ -16,10 +16,11 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        overflow: hidden;
     }
     .container {
         padding: 1.3rem 0;
-        width: 260px;
+        width: 270px;
     }
     .canvas-container #canvas {
         background:#0a0c12;
@@ -27,7 +28,7 @@
     .canvas-container {
         position: relative;
     }
-    .canvas-container .game-over-overlay {
+    .canvas-container .overlay {
         position: absolute;
         top: 0;
         left: 0;
@@ -40,7 +41,7 @@
         align-items: center;
         font-size: 1.7rem;
     }
-    .canvas-container .game-over-overlay .game-over-info {
+    .canvas-container .overlay .overlay-info {
         text-align: center;
     }
 
@@ -59,6 +60,7 @@
         text-align: center;
         width: 100%;
         background:#0a0c12;
+        border-bottom: 1px solid #ffffff;
     }
     .info-container .score-screen {
         flex: 1;
@@ -70,6 +72,10 @@
     }
     .info-container > div {
         flex: 1;
+    }
+
+    #next-piece {
+        width: 100%;
     }
 </style>
 <body>
@@ -88,8 +94,8 @@
         </div>
         <section class="canvas-container">
             <canvas id="canvas"></canvas>
-            <div class="game-over-overlay">
-                <div class="game-over-info">
+            <div class="overlay">
+                <div class="overlay-info">
                     <p class="title">Welcome to TETRIS</p>
                     <button class="play-btn">Play</button>
                 </div>

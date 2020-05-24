@@ -1,13 +1,13 @@
 import { player, addScore } from './player';
 import { getCanvas } from '../lib/getCanvas';
-import { createPiece } from './piece';
+import { draw } from '../lib/draw';
 
 export const grid = Array.from({length: 20}, () => Array(10).fill(0));
 
 //draw pieces on the board
 export function drawBoard(position) {
     const ctx = getCanvas();
-    createPiece(ctx, grid, position.x, position.y);
+    draw(ctx, grid, { posX: position.x,  posY: position.y})
 }
 
 export function sweepBoard() {
