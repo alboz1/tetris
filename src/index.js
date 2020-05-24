@@ -1,5 +1,6 @@
 import { getCanvas } from './lib/getCanvas';
 import { events } from './controllers/events';
+import './styles/index.css';
 
 const blockSize = 27;
 const ctx = getCanvas();

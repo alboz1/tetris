@@ -5,102 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tetris</title>
 </head>
-<style>
-    * {
-        box-sizing: border-box;
-    }
-    body {
-        background: #222222;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-    }
-    .container {
-        padding: 1.3rem 0;
-        width: 270px;
-    }
-    .canvas-container #canvas {
-        background:#0a0c12;
-    }
-    .canvas-container {
-        position: relative;
-    }
-    .canvas-container .overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.3);
-        color: #ffffff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 1.7rem;
-    }
-    .canvas-container .overlay .overlay-info {
-        text-align: center;
-    }
-
-    button {
-        cursor: pointer;
-    }
-
-    .play-btn {
-        padding: 1rem 1.5rem;
-    }
-
-    .info-container {
-        color: #ffffff;
-        display: flex;
-        justify-content: space-between;
-        text-align: center;
-        width: 100%;
-        background:#0a0c12;
-        border-bottom: 1px solid #ffffff;
-    }
-    .info-container .score-screen {
-        flex: 1;
-        background:#0a0c12;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 50px;
-    }
-    .info-container > div {
-        flex: 1;
-    }
-
-    #next-piece {
-        width: 100%;
-    }
-</style>
 <body>
     <main class="container">
         <div class="info-container">
             <div class="score">
                 <span>Score</span>
-                <div class="score-screen">
-                    <span id="score">0</span>
+                    <div class="score-screen">
+                        <span id="score">0</span>
+                    </div>
+                </div>
+                <div class="next-piece-container">
+                    <span>Next</span>
+                    <canvas id="next-piece"></canvas>
                 </div>
             </div>
-            <div class="next-piece-container">
-                <span>Next</span>
-                <canvas id="next-piece"></canvas>
+            <section class="canvas-container">
+                <canvas id="canvas"></canvas>
+            </section>
+        <div class="overlay">
+            <div class="overlay-wrapper start-screen">
+                <p class="title">Welcome to TETRIS</p>
+                <button class="btn play-btn">Play</button>
+                <button class="btn options-btn">Options</button>
+            </div>
+
+            <div class="overlay-wrapper options">
+                <button class="btn back-btn">< Back</button>
+                <div class="row-options">
+                    <p>Piece preview</p>
+                    <label for="piece-preview">
+                        <input type="checkbox" name="piece-preview" id="piece-preview" checked>
+                        On
+                    </label>
+                </div>
             </div>
         </div>
-        <section class="canvas-container">
-            <canvas id="canvas"></canvas>
-            <div class="overlay">
-                <div class="overlay-info">
-                    <p class="title">Welcome to TETRIS</p>
-                    <button class="play-btn">Play</button>
-                </div>
-            </div>
-        </section>
     </main>
     <script src="main.js"></script>
 </body>

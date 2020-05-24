@@ -12,5 +12,15 @@ module.exports = {
         contentBase: path.join(__dirname, 'public'),
         compress: true,
         port: 2424
+    },
+
+    module: {
+        rules: [
+            //css loader
+            {
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader']
+            }
+        ]
     }
 };

@@ -8,3 +8,16 @@ export function showOverlay() {
 export function hideOverlay() {
     overlay.style.display = 'none';
 }
+
+
+const options = overlay.querySelector('.options');
+const startScreen = overlay.querySelector('.start-screen');
+export function hideOptions() {
+    options.classList.remove('open');
+    startScreen.style.display = 'flex';
+}
+
+export function showOptions() {
+    options.classList.add('open');
+    startScreen.style.display = 'none';
+}

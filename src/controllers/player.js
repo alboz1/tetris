@@ -8,7 +8,10 @@ export const player = {
     x: 3,
     y: 0,
     gameOver: false,
-    score: 0
+    score: 0,
+    settings: {
+        piecePreview: true
+    }
 }
 
 export function playerMove(direction) {

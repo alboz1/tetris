@@ -11,7 +11,9 @@ export function spawnPiece() {
     const ctx = getCanvas();
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     draw(ctx, curPiece, { posX: player.x, posY: player.y });
-    piecePreview();
+    if (player.settings.piecePreview) {
+        piecePreview();
+    }
 }
 
 export function collide(piece, offset) {
