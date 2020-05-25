@@ -10,7 +10,8 @@ export const player = {
     gameOver: false,
     score: 0,
     settings: {
-        piecePreview: true
+        piecePreview: true,
+        pause: false
     }
 }
 
@@ -86,8 +87,12 @@ let interval = 1000;
 let lastTime = 0;
 
 export function play(time = 0) {
+    if (player.settings.pause) {
+        return;
+    }
+
     if (player.gameOver) {
-        showOverlay();
+        showOverlay('Game Over');
         grid.forEach(row => row.fill(0));
         player.score = 0;
         return;

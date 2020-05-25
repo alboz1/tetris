@@ -1,7 +1,14 @@
 const overlay = document.querySelector('.overlay');
 const info = document.querySelector('.title');
-export function showOverlay() {
-    info.textContent = 'Game over';
+export function showOverlay(infoText) {
+    const playBtn = document.querySelector('.start-screen .play-btn');
+    info.textContent = infoText;
+    if (infoText === 'Paused') {
+        playBtn.textContent = 'Resume';
+    } else {
+        playBtn.textContent = 'Play';
+
+    }
     overlay.style.display = 'flex';
 }
 

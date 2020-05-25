@@ -7,39 +7,75 @@
 </head>
 <body>
     <main class="container">
-        <div class="info-container">
-            <div class="score">
-                <span>Score</span>
-                    <div class="score-screen">
-                        <span id="score">0</span>
+        <section class="game-container">
+            <div class="info-container">
+                <div class="score">
+                    <span>Score</span>
+                        <div class="score-screen">
+                            <span id="score">0</span>
+                        </div>
+                    </div>
+                    <div class="next-piece-container">
+                        <span>Next</span>
+                        <canvas id="next-piece"></canvas>
                     </div>
                 </div>
-                <div class="next-piece-container">
-                    <span>Next</span>
-                    <canvas id="next-piece"></canvas>
+                <section class="canvas-container">
+                    <canvas id="canvas"></canvas>
+                </section>
+            <div class="overlay">
+                <div class="overlay-wrapper start-screen">
+                    <p class="title">Welcome to TETRIS</p>
+                    <button class="btn play-btn">Play</button>
+                    <button class="btn options-btn">Options</button>
+                </div>
+    
+                <div class="overlay-wrapper options">
+                    <button class="btn back-btn">< Back</button>
+                    <div class="row-options">
+                        <p>Piece preview</p>
+                        <label for="piece-preview">
+                            <input type="checkbox" name="piece-preview" id="piece-preview" checked>
+                            On
+                        </label>
+                    </div>
                 </div>
             </div>
-            <section class="canvas-container">
-                <canvas id="canvas"></canvas>
-            </section>
-        <div class="overlay">
-            <div class="overlay-wrapper start-screen">
-                <p class="title">Welcome to TETRIS</p>
-                <button class="btn play-btn">Play</button>
-                <button class="btn options-btn">Options</button>
+        </section>
+
+        <section class="instructions-container">
+            <div class="btn-wrapper">
+                <button class="btn toggle-accordion">Show instructions</button>
+                <button class="btn pause-btn">Pause</button>
             </div>
 
-            <div class="overlay-wrapper options">
-                <button class="btn back-btn">< Back</button>
-                <div class="row-options">
-                    <p>Piece preview</p>
-                    <label for="piece-preview">
-                        <input type="checkbox" name="piece-preview" id="piece-preview" checked>
-                        On
-                    </label>
+            <div class="accordion">
+                <div class="key-wrapper">
+                    <span>X</span>
+                    <p>Rotate clockwise</p>
+                </div>
+                <div class="key-wrapper">
+                    <span>Z</span>
+                    <p>Rotate counterclockwise</p>
+                </div>
+                <div class="key-wrapper">
+                    <span>Space</span>
+                    <p>Hard drop</p>
+                </div>
+                <div class="key-wrapper">
+                    <span>Left Arrow</span>
+                    <p>Move piece to the left</p>
+                </div>
+                <div class="key-wrapper">
+                    <span>Right Arrow</span>
+                    <p>Move piece to the right</p>
+                </div>
+                <div class="key-wrapper">
+                    <span>Down Arrow</span>
+                    <p>Move piece down</p>
                 </div>
             </div>
-        </div>
+        </section>
     </main>
     <script src="main.js"></script>
 </body>

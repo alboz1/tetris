@@ -160,6 +160,7 @@ export function movePiece(event) {
     } else if (keys.x === event.keyCode) {
         playerRotate(curPiece, -1);
     } else if (keys.space === event.keyCode) {
+        event.preventDefault();
         hardDrop(curPiece);
     }
 }
