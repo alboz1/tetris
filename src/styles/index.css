@@ -14,6 +14,9 @@ body {
     display: flex;
     justify-content: space-between;
 }
+.title {
+    text-align: center;
+}
 
 .game-container {
     width: 270px;
@@ -27,6 +30,10 @@ body {
     cursor: pointer;
     padding: 1rem 1.5rem;
     margin-top: 1.2rem;
+}
+
+.btn-wrapper .pause-btn {
+    display: none;
 }
 
 .info-container {
@@ -72,7 +79,6 @@ body {
     justify-content: center;
     flex-direction: column;
     padding: 0 1rem;
-    text-align: center;
     width: 100%;
 }
 
@@ -82,42 +88,38 @@ body {
     flex-direction: column;
     font-size: 1rem;
 }
-.options.open {
+.controls {
+    display: none;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 1rem;
+}
+
+.settings-screen {
+    display: none;
+}
+.settings-screen.open, .options.open, .controls.open {
     display: flex;
 }
 
-.options .row-options {
+.row {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-
-.instructions-container {
-    margin-left: 2rem;
-    padding: 1.5rem;
-    min-width: 450px;
-    max-width: 450px;
-}
-
-.instructions-container .btn-wrapper .pause-btn {
+.choose-control {
+    background: #ffffff;
+    color: #0a0c12;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0.5rem 1.8rem;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
     display: none;
+    width: 210px;
 }
-
-.accordion {
-    display: none;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 5rem 0;
-}
-.accordion.open {
-    display: flex;
-}
-.accordion .key-wrapper {
-    flex: 1;
-    border: 1px solid #ffffff;
-    color: #ffffff;
-    margin: 0 0.5rem;
-    text-align: center;
+.choose-control.active {
+    display: block;
 }

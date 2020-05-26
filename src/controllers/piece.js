@@ -138,28 +138,28 @@ export function getNextPiece() {
 }
 
 export function movePiece(event) {
-    const keys = {
-        left: 37,
-        right: 39,
-        down: 40,
-        //rotate counter clock btn
-        z: 90,
-        //rotate clock wise btn
-        x: 88,
-        space: 32
-    }
+    // const keys = {
+    //     left: 37,
+    //     right: 39,
+    //     down: 40,
+    //     //rotate counter clock btn
+    //     z: 90,
+    //     //rotate clock wise btn
+    //     x: 88,
+    //     space: 32
+    // }
 
-    if (keys.left === event.keyCode) {
+    if (player.settings.controls.move_left === event.keyCode) {
         playerMove(-1);
-    } else if (keys.right === event.keyCode) {
+    } else if (player.settings.controls.move_right === event.keyCode) {
         playerMove(1);
-    } else if (keys.down === event.keyCode) {
+    } else if (player.settings.controls.move_down === event.keyCode) {
         playerDrop(curPiece);
-    } else if (keys.z === event.keyCode) {
+    } else if (player.settings.controls.rotate_left === event.keyCode) {
         playerRotate(curPiece, 1);
-    } else if (keys.x === event.keyCode) {
+    } else if (player.settings.controls.rotate_right === event.keyCode) {
         playerRotate(curPiece, -1);
-    } else if (keys.space === event.keyCode) {
+    } else if (player.settings.controls.hard_drop === event.keyCode) {
         event.preventDefault();
         hardDrop(curPiece);
     }

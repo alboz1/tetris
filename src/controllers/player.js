@@ -11,7 +11,17 @@ export const player = {
     score: 0,
     settings: {
         piecePreview: true,
-        pause: false
+        pause: false,
+        controls: {
+            move_left: 37,
+            move_right: 39,
+            move_down: 40,
+            //rotate counter clock btn
+            rotate_left: 90,
+            //rotate clock wise btn
+            rotate_right: 88,
+            hard_drop: 32
+        }
     }
 }
 
