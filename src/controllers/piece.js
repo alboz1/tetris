@@ -138,17 +138,6 @@ export function getNextPiece() {
 }
 
 export function movePiece(event) {
-    // const keys = {
-    //     left: 37,
-    //     right: 39,
-    //     down: 40,
-    //     //rotate counter clock btn
-    //     z: 90,
-    //     //rotate clock wise btn
-    //     x: 88,
-    //     space: 32
-    // }
-
     if (player.settings.controls.move_left === event.keyCode) {
         playerMove(-1);
     } else if (player.settings.controls.move_right === event.keyCode) {
