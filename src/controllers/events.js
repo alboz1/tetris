@@ -1,7 +1,7 @@
 import { player, play } from './player';
 import { showNextPiece } from '../views/showNextPiece';
 import { movePiece, nextPiece } from './piece';
-import { hideOverlay, showOverlay, goBack, openMenu } from '../views/overlay';
+import { hideOverlay, showOverlay, goBack, openMenu, openPanel, closePanel } from '../views/overlay';
 
 export function events() {
     const playBtn = document.querySelector('.start-screen .play-btn');
@@ -49,20 +49,32 @@ export function events() {
     //choose controls
     const controls = document.querySelector('.controls');
     const chooseControl = controls.querySelector('.choose-control');
+    let selectedControl = null;
     controls.addEventListener('click', (e) => {
-        if (e.target.className === 'btn-control') {
-            const spanEl = controls.querySelector('.control-for');
-            spanEl.textContent = e.target.getAttribute('data-control');
-            chooseControl.classList.add('active');
+        if (e.target.classList.contains('btn-control')) {
+            selectedControl = e.target.getAttribute('data-control');
+            openPanel(e);
+        }
+    });
+    
+    document.addEventListener('keyup', (e) => {
+        if (e.keyCode === 27) {
+            closePanel();
+            return;
+        }
+        if (chooseControl.classList.contains('active')) {
+            const btnControl = document.querySelector(`[data-control="${selectedControl}"]`);
+            player.settings.controls[btnControl.getAttribute('data-control')] = e.keyCode;
+            btnControl.textContent = e.key;
+            closePanel();
         }
     });
 
-    document.addEventListener('keyup', (e) => {
-        if (chooseControl.classList.contains('active')) {
-            const btnControl = document.querySelector(`[data-control="${e.target.getAttribute('data-control')}"]`);
-            player.settings.controls[btnControl.getAttribute('data-control')] = e.keyCode;
-            btnControl.textContent = e.key;
-            chooseControl.classList.remove('active');
+    document.addEventListener('click', (e) => {
+        const parent = e.target.parentNode;
+        e.stopPropagation();
+        if (!e.target.classList.contains('choose-control') && !e.target.classList.contains('btn-control') && !parent.classList.contains('choose-control') && chooseControl.classList.contains('active')) {
+            closePanel();
         }
     });
 

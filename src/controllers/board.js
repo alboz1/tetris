@@ -2,7 +2,12 @@ import { player, addScore } from './player';
 import { getCanvas } from '../lib/getCanvas';
 import { draw } from '../lib/draw';
 
-export const grid = Array.from({length: 20}, () => Array(10).fill(0));
+export const gridOptions = {
+    cols: 11,
+    rows: 20
+};
+
+export const grid = Array.from({length: gridOptions.rows}, () => Array(gridOptions.cols).fill(0));
 
 //draw pieces on the board
 export function drawBoard(position) {

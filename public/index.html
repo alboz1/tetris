@@ -25,60 +25,61 @@
                 </section>
             <div class="overlay">
                 <div class="overlay-wrapper start-screen">
-                    <p class="title">Welcome to TETRIS</p>
+                    <h2 class="title">TETRIS</h2>
                     <button class="btn play-btn">Play</button>
                     <button class="btn options-btn">Options</button>
                     <button class="btn controls-btn">Controls</button>
                 </div>
                 <div class="overlay-wrapper settings-screen">
-                <button class="btn back-btn">< Back</button>
-                <div class="options">
-                    <div class="row">
-                        <p>Piece preview</p>
-                        <label for="piece-preview">
-                            <input type="checkbox" name="piece-preview" id="piece-preview" checked>
-                            On
-                        </label>
-                    </div>
-                </div>
-
-                <div class="controls">
-                    <div class="row">
-                        <p>Rotate Right</p>
-                        <button class="btn-control" data-control="rotate_right">X</button>
-                    </div>
-                    <div class="row">
-                        <p>Rotate Left</p>
-                        <button class="btn-control" data-control="rotate_left">Z</button>
-                    </div>
-                    <div class="row">
-                        <p>Move Left</p>
-                        <button class="btn-control" data-control="move_left">Left Arrow</button>
-                    </div>
-                    <div class="row">
-                        <p>Move Right</p>
-                        <button class="btn-control" data-control="move_right">Right Arrow</button>
-                    </div>
-                    <div class="row">
-                        <p>Move Down</p>
-                        <button class="btn-control" data-control="move_down">Down Arrow</button>
-                    </div>
-                    <div class="row">
-                        <p>Hard Drop</p>
-                        <button class="btn-control" data-control="hard_drop">Space</button>
+                    <button class="btn back-btn">< Back</button>
+                    <div class="options">
+                        <div class="row">
+                            <p>Piece preview</p>
+                            <div class="check-wrapper">
+                                <input type="checkbox" name="piece-preview" id="piece-preview" checked>
+                                <label for="piece-preview"></label>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="choose-control">
-                        <p>Choose a btn for <span class="control-for"></span></p>
+                    <div class="controls">
+                        <div class="row">
+                            <p>Rotate Right</p>
+                            <button class="btn small btn-control" data-control="rotate_right">X</button>
+                        </div>
+                        <div class="row">
+                            <p>Rotate Left</p>
+                            <button class="btn small btn-control" data-control="rotate_left">Z</button>
+                        </div>
+                        <div class="row">
+                            <p>Move Left</p>
+                            <button class="btn small btn-control" data-control="move_left">Left Arrow</button>
+                        </div>
+                        <div class="row">
+                            <p>Move Right</p>
+                            <button class="btn small btn-control" data-control="move_right">Right Arrow</button>
+                        </div>
+                        <div class="row">
+                            <p>Move Down</p>
+                            <button class="btn small btn-control" data-control="move_down">Down Arrow</button>
+                        </div>
+                        <div class="row">
+                            <p>Hard Drop</p>
+                            <button class="btn small btn-control" data-control="hard_drop">Space</button>
+                        </div>
+
+                        <div class="choose-control">
+                            <p class="control-for"></p>
+                        </div>
                     </div>
                 </div>
-                </div>
+                <div class="choose-control-overlay"></div>
             </div>
-        </section>
-
-        <div class="btn-wrapper">
-            <button class="btn pause-btn">Pause</button>
-        </div>
+    </section>
+    
+    <div class="btn-wrapper">
+        <button class="btn pause-btn">Pause</button>
+    </div>
     </main>
     <script src="main.js"></script>
 </body>

@@ -111,7 +111,7 @@ export function createPiece() {
 //piece preview
 export const preview = {
     piece: curPiece.slice(),
-    x: 3,
+    x: (grid[0].length / 2 | 0) - (curPiece[0].length / 2 | 0),
     y: 0,
 }
 export function piecePreview() {
