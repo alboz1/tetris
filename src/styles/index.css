@@ -3,45 +3,46 @@
 :root {
     --dark-purple: #2f3254;
     --light-purple: #6269b3;
-    --background: #222222;
-    --canvas-background: #0a0c12;
+    --canvas-background: #1E2428;
     --white: #ffffff;
     --btn-dark-background: #b1b4ba;
     --btn-light-background: #F1F6FB;
     --border: #C8CCD4;
     --primary-text: #222222;
     --green: #66b362;
+    --screen-shadow: inset 0 0 15px #0f0f0f;
 }
 body, input, textarea, button {
     font-family: 'Righteous', cursive;
 }
 
 body {
-    background: var(--background);
+    background: var(--canvas-background);
+    background-image: url('../images/background.svg');
+    background-repeat: repeat;
     margin: 0;
     padding: 1.3rem 0;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.container {
-    display: flex;
-    justify-content: space-between;
-}
-.title {
+
+.header-title {
     text-align: center;
 }
 
 .game-container {
+    background: var(--canvas-background);
+    box-shadow: 0 0 0 3px var(--dark-purple);
     position: relative;
-    box-shadow: 0 0 0 3px var(--light-purple);
 }
 
 .canvas-container {
-    height: 520px;
+    height: 500px;
 }
 .canvas-container #canvas {
-    background:var(--canvas-background);
+    box-shadow: var(--screen-shadow);
+    background: var(--canvas-background);
 }
 
 .btn {
@@ -67,38 +68,57 @@ body {
     outline: none;
 }
 
-/* pause button wrapper */
-.btn-wrapper {
-    margin-left: 2rem;
-}
-.btn-wrapper .pause-btn {
-    display: none;
+.back-btn > svg, .back-btn > span {
+    vertical-align: middle;
 }
 
+/* pause button wrapper */
+.btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.6rem 0 0 0;
+}
+.btn-container .pause-btn {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+/* screen info for the player (score, next piece) */
 .info-container {
+    box-sizing: border-box;
     color: var(--white);
     display: flex;
     justify-content: space-between;
     text-align: center;
+    padding: 0.5rem;
     width: 100%;
-    background: var(--canvas-background);
-    border-bottom: 1px solid var(--border);
 }
 .info-container .score-screen {
+    background: #1B2024;
+    box-shadow: var(--screen-shadow);
+    border-radius: 2px;
     flex: 1;
-    background:var(--canvas-background);
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 70px;
+    height: 64px;
+    margin-right: 0.5rem;
 }
-.info-container > div {
+.info-container div {
     flex: 1;
-    padding: 0.5rem 0;
     box-sizing: border-box;
+}
+.info-container > div > span {
+    display: block;
+    margin-bottom: 0.2rem;
 }
 
 #next-piece {
+    background: #1B2024;
+    box-shadow: var(--screen-shadow);
+    border-radius: 2px;
     width: 100%;
 }
 
@@ -121,6 +141,12 @@ body {
     flex-direction: column;
     padding: 0 1rem;
     width: 100%;
+}
+
+.player-score {
+    display: none;
+    font-size: 1rem;
+    text-align: center;
 }
 
 .options {
@@ -190,7 +216,7 @@ body {
     top: 0;
     left: 0;
     transform: scale(0.88);
-    transition: transform 0.3s cubic-bezier(0,1.15,0,1.59);
+    transition: transform 0.4s cubic-bezier(0,1.15,0,1.59);
 }
 
 /* -------------------- */

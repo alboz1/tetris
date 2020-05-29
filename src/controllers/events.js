@@ -57,7 +57,9 @@ export function events() {
         }
     });
     
+    //event to make the key user pressed as a default control for the selected move
     document.addEventListener('keyup', (e) => {
+        //close panel if escape key is pressed
         if (e.keyCode === 27) {
             closePanel();
             return;
@@ -70,6 +72,7 @@ export function events() {
         }
     });
 
+    //click anywhere outside to close panel after choosing control
     document.addEventListener('click', (e) => {
         const parent = e.target.parentNode;
         e.stopPropagation();

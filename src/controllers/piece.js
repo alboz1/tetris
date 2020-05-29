@@ -125,7 +125,7 @@ export function piecePreview() {
     preview.piece.forEach((row, y) => {
         row.forEach((value, x) => {
             if (value > 0) {
-                createRect(ctx, 'rgba(0, 0, 0, 0.5)', preview.x + x, preview.y + y, 1, 1);
+                createRect(ctx, '15, 15, 15', preview.x + x, preview.y + y, 1, 1);
             }
         });
     });
@@ -143,6 +143,7 @@ export function movePiece(event) {
     } else if (player.settings.controls.move_right === event.keyCode) {
         playerMove(1);
     } else if (player.settings.controls.move_down === event.keyCode) {
+        event.preventDefault();
         playerDrop(curPiece);
     } else if (player.settings.controls.rotate_left === event.keyCode) {
         playerRotate(curPiece, 1);

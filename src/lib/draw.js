@@ -2,13 +2,13 @@ import { createRect } from './createRect';
 
 const colors = [
     null,
-    '#33ACFE',
-    '#7ac9ff',
-    '#edff7a',
-    '#ffca7a',
-    '#81ff7a',
-    '#bd7aff',
-    '#ff3838'
+    '51, 172, 254',
+    '75, 105, 214',
+    '237, 255, 122',
+    '255, 202, 122',
+    '129, 255, 122',
+    '189, 122, 255',
+    '255, 56, 56'
 ];
 
 export function draw(ctx, matrix, offset) {

@@ -3,7 +3,7 @@ import { events } from './controllers/events';
 import { gridOptions } from './controllers/board';
 import './styles/index.css';
 
-const blockSize = 26;
+const blockSize = 25;
 const ctx = getCanvas();
 
 ctx.canvas.width = gridOptions.cols * blockSize;

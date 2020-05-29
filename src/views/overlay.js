@@ -1,13 +1,19 @@
+import { player } from '../controllers/player';
+
 const overlay = document.querySelector('.overlay');
-const info = document.querySelector('.title');
-export function showOverlay(infoText) {
+const header = document.querySelector('.header-title');
+export function showOverlay(gameState) {
     const playBtn = document.querySelector('.start-screen .play-btn');
-    const pauseBtn = document.querySelector('.pause-btn');
-    info.textContent = infoText;
-    pauseBtn.style.display = 'none';
-    if (infoText === 'Paused') {
+    const playerScoreEl = overlay.querySelector('.player-score');
+    header.textContent = gameState;
+    if (gameState === 'Paused') {
+        playerScoreEl.style.display = 'none';
         playBtn.textContent = 'Resume';
     } else {
+        const spanEl = playerScoreEl.querySelector('span');
+        spanEl.textContent = player.score;
+        playerScoreEl.style.display = 'block';
+
         playBtn.textContent = 'Play';
 
     }
