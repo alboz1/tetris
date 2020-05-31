@@ -1,13 +1,14 @@
 import { player, play } from './player';
 import { showNextPiece } from '../views/showNextPiece';
 import { movePiece, nextPiece } from './piece';
+import { sounds, playAudio, pauseAudio } from './audio';
 import { hideOverlay, showOverlay, goBack, openMenu, openPanel, closePanel } from '../views/overlay';
 
 export function events() {
     const playBtn = document.querySelector('.start-screen .play-btn');
     const pauseBtn = document.querySelector('.pause-btn');
-    
     playBtn.addEventListener('click', () => {
+        playAudio(sounds.background, 'loop');
         pauseBtn.style.display = 'inline-block';
         if (player.settings.pause) {
             player.settings.pause = false;
@@ -40,9 +41,16 @@ export function events() {
         player.settings.piecePreview = e.target.checked;
     });
 
-    //toggle pause/resume game
+    //toggle sound
+    const soundToggle = document.querySelector('#sound');
+    soundToggle.addEventListener('change', (e) => {
+        player.settings.sound = e.target.checked;
+    });
+
+    //pause game
     pauseBtn.addEventListener('click', () => {
         player.settings.pause = true;
+        pauseAudio(sounds.background);
         showOverlay('Paused');
     });
 
@@ -72,15 +80,13 @@ export function events() {
         }
     });
 
-    //click anywhere outside to close panel after choosing control
+    //click anywhere outside to close panel (if you dont want to change the current control)
     document.addEventListener('click', (e) => {
-        const parent = e.target.parentNode;
-        e.stopPropagation();
-        if (!e.target.classList.contains('choose-control') && !e.target.classList.contains('btn-control') && !parent.classList.contains('choose-control') && chooseControl.classList.contains('active')) {
+        if (chooseControl.classList.contains('active') && !e.target.classList.contains('choose-control') && !e.target.classList.contains('btn-control') && !e.target.classList.contains('control-for')) {
             closePanel();
         }
     });
-
+    
     document.addEventListener('keydown', (e) => {
         if (player.settings.pause) return;
         movePiece(e);

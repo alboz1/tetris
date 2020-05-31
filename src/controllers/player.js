@@ -3,6 +3,7 @@ import { showNextPiece } from '../views/showNextPiece';
 import { grid, mergeToBoard, sweepBoard, drawBoard } from './board';
 import { showScore } from '../views/showScore';
 import { showOverlay } from '../views/overlay';
+import { playAudio, sounds, stopAudio } from './audio';
 
 export const player = {
     x: (grid[0].length / 2 | 0) - (curPiece[0].length / 2 | 0),
@@ -12,6 +13,7 @@ export const player = {
     settings: {
         piecePreview: true,
         pause: false,
+        sound: true,
         controls: {
             move_left: 37,
             move_right: 39,
@@ -26,6 +28,7 @@ export const player = {
 }
 
 export function playerMove(direction) {
+    playAudio(sounds.moving);
     player.x += direction;
     preview.x += direction;
     if (collide(curPiece, player)) {
@@ -105,6 +108,8 @@ export function play(time = 0) {
         showOverlay('Game Over');
         grid.forEach(row => row.fill(0));
         player.score = 0;
+        stopAudio(sounds.background);
+        playAudio(sounds.gameover);
         return;
     }
 

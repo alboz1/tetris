@@ -21,10 +21,12 @@ body {
     background-image: url('../images/background.svg');
     background-repeat: repeat;
     margin: 0;
-    padding: 1.3rem 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 1.1rem 0;
+}
+
+.container {
+    width: 275px;
+    margin: 0 auto;
 }
 
 .header-title {
@@ -39,6 +41,7 @@ body {
 
 .canvas-container {
     height: 500px;
+    width: auto;
 }
 .canvas-container #canvas {
     box-shadow: var(--screen-shadow);
@@ -128,7 +131,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(var(--light-purple), var(--dark-purple));    
+    background: linear-gradient(var(--canvas-background), var(--dark-purple));
     color: var(--white);
     display: flex;
     justify-content: center;
@@ -184,15 +187,15 @@ body {
 }
 .check-wrapper input:checked + label::after {
     transform: scale(0.8);
-    box-shadow: inset 0 0 2px var(--dark-purple);
-    border-color: var(--green);
+    box-shadow: inset 0 0 2px var(--canvas-background);
+    border: 3px solid var(--green);
 }
 .check-wrapper input:checked + label {
-    box-shadow: inset 0 0 3px var(--dark-purple);
+    box-shadow: inset 0 0 3px var(--canvas-background);
 }
 .check-wrapper label {
     border-radius: 50px;
-    background: var(--dark-purple);
+    background: var(--canvas-background);
     box-shadow: inset 0 0 3px var(--light-purple);
     width: 100%;
     height: 100%;
@@ -203,7 +206,6 @@ body {
 .check-wrapper label::after {
     content: '';
     background: linear-gradient(145deg, var(--btn-dark-background), var(--btn-light-background) 50%);
-    border: 3px solid var(--border);
     border-radius: 50px;
     box-sizing: border-box;
     box-shadow: inset 0 0 2px var(--dark-purple), 3px 3px 5px rgba(0, 0, 0, 0.4);

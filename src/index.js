@@ -1,7 +1,7 @@
 import { getCanvas } from './lib/getCanvas';
 import { events } from './controllers/events';
 import { gridOptions } from './controllers/board';
-import './styles/index.css';
+import './assets/styles/index.css';
 
 const blockSize = 25;
 const ctx = getCanvas();

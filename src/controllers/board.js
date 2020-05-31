@@ -1,6 +1,7 @@
 import { player, addScore } from './player';
 import { getCanvas } from '../lib/getCanvas';
 import { draw } from '../lib/draw';
+import { sounds, playAudio } from './audio';
 
 export const gridOptions = {
     cols: 11,
@@ -12,7 +13,7 @@ export const grid = Array.from({length: gridOptions.rows}, () => Array(gridOptio
 //draw pieces on the board
 export function drawBoard(position) {
     const ctx = getCanvas();
-    draw(ctx, grid, { posX: position.x,  posY: position.y})
+    draw(ctx, grid, { posX: position.x,  posY: position.y});
 }
 
 export function sweepBoard() {
@@ -24,9 +25,9 @@ export function sweepBoard() {
             clearedRows++;
             const newRow = grid.splice(index, 1)[0].fill(0);
             grid.unshift(newRow);
+            playAudio(sounds.lineClear);
         }
     });
-    
     addScore(clearedRows);
 }
 
@@ -38,4 +39,5 @@ export function mergeToBoard(piece) {
             }
         });
     });
+    playAudio(sounds.hit);
 }
