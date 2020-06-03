@@ -1,4 +1,4 @@
-import { player } from '../controllers/player';
+import { player } from '../models/player_model';
 
 export function showScore() {
     const scoreElement = document.querySelector('#score');

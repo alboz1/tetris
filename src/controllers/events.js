@@ -1,15 +1,16 @@
-import { player, play } from './player';
+import { play, playerMove, playerRotate, playerDrop, hardDrop, newGame } from './player';
+import { player } from '../models/player_model';
 import { showNextPiece } from '../views/showNextPiece';
-import { movePiece, nextPiece } from './piece';
+import { movePiece, nextPiece, curPiece } from './piece';
 import { sounds, playAudio, pauseAudio } from './audio';
 import { hideOverlay, showOverlay, goBack, openMenu, openPanel, closePanel } from '../views/overlay';
+import { getDiff } from '../lib/getDiff';
 
 export function events() {
+    //play/resume button
     const playBtn = document.querySelector('.start-screen .play-btn');
-    const pauseBtn = document.querySelector('.pause-btn');
     playBtn.addEventListener('click', () => {
         playAudio(sounds.background, 'loop');
-        pauseBtn.style.display = 'inline-block';
         if (player.settings.pause) {
             player.settings.pause = false;
         }
@@ -48,11 +49,16 @@ export function events() {
     });
 
     //pause game
+    const pauseBtn = document.querySelector('.pause-btn');
     pauseBtn.addEventListener('click', () => {
         player.settings.pause = true;
         pauseAudio(sounds.background);
         showOverlay('Paused');
     });
+
+    //new game
+    const newGameBtn = document.querySelector('.new-game');
+    newGameBtn.addEventListener('click', newGame);
 
     //choose controls
     const controls = document.querySelector('.controls');
@@ -75,20 +81,96 @@ export function events() {
         if (chooseControl.classList.contains('active')) {
             const btnControl = document.querySelector(`[data-control="${selectedControl}"]`);
             player.settings.controls[btnControl.getAttribute('data-control')] = e.keyCode;
-            btnControl.textContent = e.key;
+            btnControl.textContent = e.key === ' ' ? 'Space' : e.key;
             closePanel();
         }
     });
 
     //click anywhere outside to close panel (if you dont want to change the current control)
     document.addEventListener('click', (e) => {
-        if (chooseControl.classList.contains('active') && !e.target.classList.contains('choose-control') && !e.target.classList.contains('btn-control') && !e.target.classList.contains('control-for')) {
+        if (
+            chooseControl.classList.contains('active') &&
+            !e.target.classList.contains('choose-control') &&
+            !e.target.classList.contains('btn-control') &&
+            !e.target.classList.contains('control-for')
+        ) {
             closePanel();
         }
     });
     
     document.addEventListener('keydown', (e) => {
-        if (player.settings.pause) return;
+        if (player.settings.pause || chooseControl.classList.contains('active')) return;
         movePiece(e);
+    });
+
+    //mobile controls
+    const canvas = document.querySelector('#canvas');
+    let prevTouchPosY = 0;
+    //touch sensitivity
+    let sensitivity = 0;
+
+    //track moving speed when player swipes
+    let movingSpeed = 0;
+
+    let touchMoved = true;
+    //moving horizontally
+    let movingH = false;
+
+    let yDown = null;
+    let xDown = null;
+    canvas.addEventListener('touchmove', (e) => {
+        if (player.settings.pause) return;
+        e.preventDefault();
+        touchMoved = true;
+        const touch = e.changedTouches[0];
+        const { xDiff, yDiff } = getDiff(e, xDown, yDown);
+        
+        if (sensitivity > 7) {
+            if (Math.abs(xDiff) > Math.abs(yDiff)) {
+                movingH = true;
+                if (xDiff > 0) {
+                    //move left
+                    playerMove(-1);
+                } else {
+                    //move right
+                    playerMove(1);
+                }
+            }
+            //move piece down
+            if (touch.pageY - prevTouchPosY > 0 && !movingH) {
+                playerDrop(curPiece);
+                movingSpeed++;
+                movingH = false;
+            }
+
+            sensitivity = 0;
+        }
+        sensitivity++;
+
+        prevTouchPosY = touch.pageY;
+    });
+
+    canvas.addEventListener('touchend', (e) => {
+        const { xDiff, yDiff } = getDiff(e, xDown, yDown);
+        movingH = false;
+
+        if (Math.abs(xDiff) < Math.abs(yDiff)) {
+            if (yDiff < 0 && movingSpeed <= 1) {
+                hardDrop(curPiece);
+            }
+            //reset after player drops piece and lifts finger
+            yDown = null;
+        }
+        
+        if (!touchMoved) {
+            playerRotate(curPiece, 1);
+        }
+        movingSpeed = 0;
+    });
+
+    canvas.addEventListener('touchstart', (e) => {
+        xDown = e.changedTouches[0].clientX;
+        yDown = e.changedTouches[0].clientY;
+        touchMoved = false;
     });
 }

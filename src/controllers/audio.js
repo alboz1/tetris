@@ -3,7 +3,7 @@ import hit from '../assets/sound/hit.wav';
 import moving from '../assets/sound/moving.wav';
 import gameOver from '../assets/sound/game-over.wav';
 import lineClear from '../assets/sound/line-clear.wav';
-import { player } from './player';
+import { player } from '../models/player_model';
 
 export const sounds = {
     background: document.querySelector('#background-music'),

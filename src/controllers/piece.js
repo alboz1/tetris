@@ -1,13 +1,15 @@
 import { createRect } from '../lib/createRect';
 import { getCanvas } from '../lib/getCanvas';
-import { player, playerDrop, playerMove, playerRotate, hardDrop } from './player';
-import { grid } from './board';
+import { playerDrop, playerMove, playerRotate, hardDrop } from './player';
+import { player } from '../models/player_model';
+import { grid } from '../models/grid_model';
 import { draw } from '../lib/draw';
 
 export let curPiece = createPiece();
 export let nextPiece = getNextPiece();
 
 export function spawnPiece() {
+    //center piece
     const ctx = getCanvas();
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     draw(ctx, curPiece, { posX: player.x, posY: player.y });
@@ -37,8 +39,10 @@ export function reset() {
     preview.y = 0;
     nextPiece = getNextPiece();
 
+    //check game over
     if (collide(curPiece, player)) {
         player.gameOver = true;
+        player.highScore = player.score > player.highScore ? player.score : player.highScore;
     }
 }
 

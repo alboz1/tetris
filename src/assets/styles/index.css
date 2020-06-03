@@ -12,6 +12,7 @@
     --green: #66b362;
     --screen-shadow: inset 0 0 15px #0f0f0f;
 }
+
 body, input, textarea, button {
     font-family: 'Righteous', cursive;
 }
@@ -21,7 +22,10 @@ body {
     background-image: url('../images/background.svg');
     background-repeat: repeat;
     margin: 0;
-    padding: 1.1rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 .container {
@@ -41,11 +45,12 @@ body {
 
 .canvas-container {
     height: 500px;
-    width: auto;
+    width: 275px;
 }
-.canvas-container #canvas {
+#canvas {
     box-shadow: var(--screen-shadow);
     background: var(--canvas-background);
+    margin: 0 auto;
 }
 
 .btn {
@@ -84,8 +89,12 @@ body {
 }
 .btn-container .pause-btn {
     padding: 0;
-    margin: 0;
+    margin: 0.3rem 0;
     text-align: center;
+}
+
+.new-game {
+    display: none;
 }
 
 /* screen info for the player (score, next piece) */
@@ -146,7 +155,7 @@ body {
     width: 100%;
 }
 
-.player-score {
+.player-score, .player-highscore {
     display: none;
     font-size: 1rem;
     text-align: center;
@@ -263,4 +272,22 @@ body {
 
 .choose-control.active, .choose-control-overlay.active {
     display: block;
+}
+
+/* -------- MEDIA QUERIES -------- */
+@media (max-width: 1024px) {
+    .controls-btn {
+        display: none;
+    }
+}
+
+@media (max-width: 375px) {
+    .canvas-container {
+        height: 460px;
+        width: 253px;
+    }
+
+    .container {
+        width: 253px;
+    }
 }

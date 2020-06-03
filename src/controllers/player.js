@@ -1,31 +1,12 @@
+import { player } from '../models/player_model';
 import { collide, rotate, reset, spawnPiece, curPiece, preview, nextPiece } from './piece';
 import { showNextPiece } from '../views/showNextPiece';
-import { grid, mergeToBoard, sweepBoard, drawBoard } from './board';
+import { mergeToBoard, sweepBoard, drawBoard } from './board';
 import { showScore } from '../views/showScore';
 import { showOverlay } from '../views/overlay';
 import { playAudio, sounds, stopAudio } from './audio';
-
-export const player = {
-    x: (grid[0].length / 2 | 0) - (curPiece[0].length / 2 | 0),
-    y: 0,
-    gameOver: false,
-    score: 0,
-    settings: {
-        piecePreview: true,
-        pause: false,
-        sound: true,
-        controls: {
-            move_left: 37,
-            move_right: 39,
-            move_down: 40,
-            //rotate counter clock btn
-            rotate_left: 90,
-            //rotate clock wise btn
-            rotate_right: 88,
-            hard_drop: 32
-        }
-    }
-}
+import { hideOverlay } from '../views/overlay';
+import { grid } from '../models/grid_model';
 
 export function playerMove(direction) {
     playAudio(sounds.moving);
@@ -106,8 +87,6 @@ export function play(time = 0) {
 
     if (player.gameOver) {
         showOverlay('Game Over');
-        grid.forEach(row => row.fill(0));
-        player.score = 0;
         stopAudio(sounds.background);
         playAudio(sounds.gameover);
         return;
@@ -124,4 +103,25 @@ export function play(time = 0) {
     spawnPiece();
     drawBoard({ x: 0, y: 0 });
     requestAnimationFrame(play);
+}
+
+export function newGame() {
+    //reset grid and player's score
+    grid.forEach(row => row.fill(0));
+    player.score = 0;
+    player.gameOver = false;
+    reset();
+    
+    playAudio(sounds.background, 'loop');
+
+    if (player.settings.pause) {
+        player.settings.pause = false;
+    }
+    hideOverlay();
+
+    const scoreElement = document.querySelector('#score');
+    scoreElement.textContent = player.score;
+    
+    play();
+    showNextPiece(nextPiece);
 }

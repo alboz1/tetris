@@ -1,22 +1,32 @@
-import { player } from '../controllers/player';
+import { player } from '../models/player_model';
 
 const overlay = document.querySelector('.overlay');
 const header = document.querySelector('.header-title');
+const startScreen = overlay.querySelector('.start-screen');
+
 export function showOverlay(gameState) {
     const playBtn = document.querySelector('.start-screen .play-btn');
-    const playerScoreEl = overlay.querySelector('.player-score');
+    const scoreEl = overlay.querySelector('.player-score');
+    const highScoreEl = overlay.querySelector('.player-highscore');
     header.textContent = gameState;
+    
+    const newGameBtn = document.querySelector('.new-game');
     if (gameState === 'Paused') {
-        playerScoreEl.style.display = 'none';
+        scoreEl.style.display = 'none';
+        highScoreEl.style.display = 'none';
         playBtn.textContent = 'Resume';
+        playBtn.style.display = 'block';
     } else {
-        const spanEl = playerScoreEl.querySelector('span');
-        spanEl.textContent = player.score;
-        playerScoreEl.style.display = 'block';
-
-        playBtn.textContent = 'Play';
-
+        const score = scoreEl.querySelector('span');
+        const highScore = highScoreEl.querySelector('span');
+        score.textContent = player.score;
+        highScore.textContent = player.highScore;
+        scoreEl.style.display = 'block';
+        highScoreEl.style.display = 'block';
+        playBtn.style.display = 'none';
+        
     }
+    newGameBtn.style.display = 'block';
     overlay.style.display = 'flex';
 }
 
@@ -27,7 +37,6 @@ export function hideOverlay() {
 const settingsScreen = overlay.querySelector('.settings-screen');
 const controls = overlay.querySelector('.controls');
 const options = overlay.querySelector('.options');
-const startScreen = overlay.querySelector('.start-screen');
 const chooseControl = controls.querySelector('.choose-control');
 export function goBack() {
     settingsScreen.classList.remove('open');
