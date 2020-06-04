@@ -5,6 +5,7 @@ import { movePiece, nextPiece, curPiece } from './piece';
 import { sounds, playAudio, pauseAudio } from './audio';
 import { hideOverlay, showOverlay, goBack, openMenu, openPanel, closePanel } from '../views/overlay';
 import { getDiff } from '../lib/getDiff';
+import { removeLoadingScreen } from '../views/loadingBar';
 
 export function events() {
     //play/resume button
@@ -102,6 +103,17 @@ export function events() {
         if (player.settings.pause || chooseControl.classList.contains('active')) return;
         movePiece(e);
     });
+
+    //loading bar
+    const progressBar = document.querySelector('.progress-bar-foreground');
+    let progress = 0;
+    Object.values(sounds).forEach(soundEl => {
+        soundEl.addEventListener('loadeddata', () => {
+            progress = progress + 20;
+            progressBar.style.width = `${progress}%`;
+        });
+    });
+    progressBar.addEventListener('transitionend', removeLoadingScreen);
 
     //mobile controls
     const canvas = document.querySelector('#canvas');

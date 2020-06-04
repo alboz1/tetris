@@ -12,6 +12,7 @@ export const sounds = {
     gameover: document.querySelector('#game-over-music'),
     lineClear: document.querySelector('#line-clear-music')
 };
+
 sounds.background.setAttribute('src', bgMusic);
 sounds.hit.setAttribute('src', hit);
 sounds.moving.setAttribute('src', moving);
