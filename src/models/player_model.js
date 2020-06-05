@@ -10,6 +10,7 @@ export const player = {
     settings: {
         piecePreview: true,
         pause: true,
+        music: true,
         sound: true,
         controls: {
             move_left: 37,

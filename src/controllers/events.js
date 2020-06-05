@@ -11,23 +11,22 @@ export function events() {
     //play/resume button
     const playBtn = document.querySelector('.start-screen .play-btn');
     playBtn.addEventListener('click', () => {
-        playAudio(sounds.background, 'loop');
+        //check if player enabled background music
+        if (player.settings.music) {
+            playAudio(sounds.background, 'loop');
+        }
+
         if (player.settings.pause) {
             player.settings.pause = false;
         }
         hideOverlay();
-        if (player.gameOver) {
-            const scoreElement = document.querySelector('#score');
-            scoreElement.textContent = player.score;
-            player.gameOver = false;
-        }
         play();
         showNextPiece(nextPiece);
     });
 
     //open options menu
-    const optionsBtn = document.querySelector('.options-btn');
-    optionsBtn.addEventListener('click', () => openMenu('options'));
+    const settingsBtn = document.querySelector('.settings-btn');
+    settingsBtn.addEventListener('click', () => openMenu('settings'));
 
     //open controls menu
     const controlsBtn = document.querySelector('.controls-btn');
@@ -47,6 +46,12 @@ export function events() {
     const soundToggle = document.querySelector('#sound');
     soundToggle.addEventListener('change', (e) => {
         player.settings.sound = e.target.checked;
+    });
+
+    //toggle background music
+    const musicToggle = document.querySelector('#music');
+    musicToggle.addEventListener('change', (e) => {
+        player.settings.music = e.target.checked;
     });
 
     //pause game
@@ -108,12 +113,16 @@ export function events() {
     const progressBar = document.querySelector('.progress-bar-foreground');
     let progress = 0;
     Object.values(sounds).forEach(soundEl => {
-        soundEl.addEventListener('loadeddata', () => {
-            progress = progress + 20;
+        soundEl.addEventListener('loadedmetadata', () => {
+            progress += 20;
             progressBar.style.width = `${progress}%`;
         });
     });
-    progressBar.addEventListener('transitionend', removeLoadingScreen);
+    progressBar.addEventListener('transitionend', () => {
+        if (progress === 100) {
+            removeLoadingScreen();
+        }
+    });
 
     //mobile controls
     const canvas = document.querySelector('#canvas');

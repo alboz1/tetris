@@ -36,20 +36,20 @@ export function hideOverlay() {
 
 const settingsScreen = overlay.querySelector('.settings-screen');
 const controls = overlay.querySelector('.controls');
-const options = overlay.querySelector('.options');
+const settings = overlay.querySelector('.settings');
 const chooseControl = controls.querySelector('.choose-control');
 export function goBack() {
     settingsScreen.classList.remove('open');
-    options.classList.remove('open');
+    settings.classList.remove('open');
     controls.classList.remove('open');
     chooseControl.classList.remove('active');
     startScreen.style.display = 'flex';
 }
 
-//open menu for options or controls
+//open menu for settings or controls
 export function openMenu(menu) {
-    if (menu === 'options') {
-        options.classList.add('open');
+    if (menu === 'settings') {
+        settings.classList.add('open');
     } else if (menu === 'controls') {
         controls.classList.add('open');
     }

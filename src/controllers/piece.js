@@ -4,6 +4,7 @@ import { playerDrop, playerMove, playerRotate, hardDrop } from './player';
 import { player } from '../models/player_model';
 import { grid } from '../models/grid_model';
 import { draw } from '../lib/draw';
+import { showFavicon } from '../views/favicon';
 
 export let curPiece = createPiece();
 export let nextPiece = getNextPiece();
@@ -31,14 +32,13 @@ export function collide(piece, offset) {
 
 export function reset() {
     curPiece = nextPiece;
-    //put piece in the center of the board
-    player.x = (grid[0].length / 2 | 0) - (curPiece[0].length / 2 | 0);
+    player.x = (grid[0].length / 2 | 0) - (curPiece[0].length / 2 | 0); //put piece in the center of the board
     player.y = 0;
     preview.piece = curPiece;
     preview.x = player.x;
     preview.y = 0;
     nextPiece = getNextPiece();
-
+    showFavicon(curPiece);
     //check game over
     if (collide(curPiece, player)) {
         player.gameOver = true;

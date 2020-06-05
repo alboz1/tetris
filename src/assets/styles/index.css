@@ -28,6 +28,10 @@ body {
     height: 100vh;
 }
 
+#favicon-piece {
+    display: none;
+}
+
 .container {
     width: 275px;
     margin: 0 auto;
@@ -166,7 +170,7 @@ body {
     text-align: center;
 }
 
-.options {
+.settings {
     display: none;
     justify-content: center;
     flex-direction: column;
@@ -182,7 +186,7 @@ body {
 .settings-screen {
     display: none;
 }
-.settings-screen.open, .options.open, .controls.open {
+.settings-screen.open, .settings.open, .controls.open {
     display: flex;
 }
 

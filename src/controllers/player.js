@@ -111,8 +111,9 @@ export function newGame() {
     player.score = 0;
     player.gameOver = false;
     reset();
-    
-    playAudio(sounds.background, 'loop');
+    if (player.settings.music) {
+        playAudio(sounds.background, 'loop');
+    }
 
     if (player.settings.pause) {
         player.settings.pause = false;

@@ -19,7 +19,10 @@ module.exports = {
 
     plugins: [
         new MiniCssExtractPlugin(),
-        new HtmlWebpackPlugin({template: './src/assets/index.html'})
+        new HtmlWebpackPlugin({
+            template: './src/assets/index.html',
+            favicon: './src/assets/favicon.ico'
+        })
     ],
 
     module: {
