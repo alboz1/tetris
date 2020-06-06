@@ -101,6 +101,10 @@ body {
     display: none;
 }
 
+.home-btn {
+    display: none;
+}
+
 .btn-control {
     text-transform: uppercase;
     font-size: 0.7rem;
@@ -152,16 +156,35 @@ body {
     background: linear-gradient(var(--canvas-background), var(--dark-purple));
     color: var(--white);
     display: flex;
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center; */
+    /* align-items: center; */
+    flex-direction: column;
     font-size: 1.7rem;
 }
 .overlay-wrapper {
+    flex: 1;
+    align-self: stretch;
+    box-sizing: border-box;
     display: flex;
     justify-content: center;
     flex-direction: column;
     padding: 0 1rem;
     width: 100%;
+}
+
+.player-info {
+    align-self: flex-start;
+    box-sizing: border-box;
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0.5rem;
+    width: 100%;
+}
+
+.player-info-score {
+    font-size: 0.8rem;
 }
 
 .player-score, .player-highscore {
@@ -320,6 +343,31 @@ body {
 .loading-screen.remove {
     clip-path: circle(0%);
 }
+
+/* username screen */
+.username-screen {
+    display: none;
+}
+
+.username-screen form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.username-screen #username {
+    border: none;
+    box-sizing: border-box;
+    box-shadow: 0 0 0 2px var(--btn-dark-background);
+    padding: 0.7rem 0.3rem;
+    margin-bottom: 1.5rem;
+}
+
+.username-screen #username:focus {
+    box-shadow: 0 0 0 3px var(--light-purple);
+    outline: none;
+}
+
 
 /* -------- MEDIA QUERIES -------- */
 @media (max-width: 1024px) {

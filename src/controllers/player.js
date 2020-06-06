@@ -1,4 +1,4 @@
-import { player } from '../models/player_model';
+import { player, playerInfo } from '../models/player_model';
 import { collide, rotate, reset, spawnPiece, curPiece, preview, nextPiece } from './piece';
 import { showNextPiece } from '../views/showNextPiece';
 import { mergeToBoard, sweepBoard, drawBoard } from './board';
@@ -7,6 +7,15 @@ import { showOverlay } from '../views/overlay';
 import { playAudio, sounds, stopAudio } from './audio';
 import { hideOverlay } from '../views/overlay';
 import { grid } from '../models/grid_model';
+import { showControls } from '../views/btnControls';
+
+export function registerPlayer(username) {
+    if (!username) return;
+
+    playerInfo.username = username;
+    localStorage.setItem('player', JSON.stringify(playerInfo));
+    showOverlay('Homescreen');
+}
 
 export function playerMove(direction) {
     playAudio(sounds.moving);
@@ -16,6 +25,21 @@ export function playerMove(direction) {
         player.x -= direction;
         preview.x -= direction;
     }
+}
+
+export function savePlayerSettings(player) {
+    localStorage.setItem('player', JSON.stringify(player));
+}
+
+//init player settings and controls
+export function initPlayer() {
+    const piecePreviewEl = document.querySelector('#piece-preview');
+    const musicEl = document.querySelector('#music');
+    const soundEl = document.querySelector('#sound');
+    piecePreviewEl.checked = playerInfo.settings.piecePreview;
+    musicEl.checked = playerInfo.settings.music;
+    soundEl.checked = playerInfo.settings.sound;
+    showControls();
 }
 
 export function playerDrop(piece) {
@@ -64,14 +88,15 @@ export function playerRotate(piece, direction) {
 //add score
 export function addScore(linesCleared) {
     if (linesCleared === 1) {
-        player.score += 40;
+        playerInfo.score += 40;
     } else if (linesCleared === 2) {
-        player.score += 100;
+        playerInfo.score += 100;
     } else if (linesCleared === 3) {
-        player.score += 300;
+        playerInfo.score += 300;
     } else if (linesCleared >= 4) {
-        player.score += 1200;
+        playerInfo.score += 1200;
     }
+    savePlayerSettings(playerInfo);
     showScore();
 }
 
@@ -81,7 +106,7 @@ let interval = 1000;
 let lastTime = 0;
 
 export function play(time = 0) {
-    if (player.settings.pause) {
+    if (player.pause) {
         return;
     }
 
@@ -108,20 +133,20 @@ export function play(time = 0) {
 export function newGame() {
     //reset grid and player's score
     grid.forEach(row => row.fill(0));
-    player.score = 0;
+    playerInfo.score = 0;
     player.gameOver = false;
     reset();
-    if (player.settings.music) {
+    if (playerInfo.settings.music) {
         playAudio(sounds.background, 'loop');
     }
 
-    if (player.settings.pause) {
-        player.settings.pause = false;
+    if (player.pause) {
+        player.pause = false;
     }
     hideOverlay();
 
     const scoreElement = document.querySelector('#score');
-    scoreElement.textContent = player.score;
+    scoreElement.textContent = playerInfo.score;
     
     play();
     showNextPiece(nextPiece);

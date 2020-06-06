@@ -27,12 +27,23 @@
                 <canvas id="canvas"></canvas>
             </section>
             <div class="overlay">
+                <header class="player-info">
+                    <p class="player-info-username"></p>
+                    <p class="player-info-score">High Score: <span></span></p>
+                </header>
+                <div class="overlay-wrapper username-screen">
+                    <form>
+                        <input type="text" name="username" id="username" placeholder="Enter a username" required />
+                        <input class="btn small" type="submit" value="Register" />
+                    </form>
+                </div>
                 <div class="overlay-wrapper start-screen">
                     <h2 class="header-title">TETRIS</h2>
                     <p class="player-score">Your score is: <span></span></p>
                     <p class="player-highscore">Your high score is: <span></span></p>
                     <button class="btn play-btn">Play</button>
                     <button class="btn new-game">New Game</button>
+                    <button class="btn home-btn">Home</button>
                     <button class="btn settings-btn">Settings</button>
                     <button class="btn controls-btn">Controls</button>
                 </div>
@@ -45,21 +56,21 @@
                         <div class="row">
                             <p>Piece preview</p>
                             <div class="check-wrapper">
-                                <input type="checkbox" name="piece-preview" id="piece-preview" checked>
+                                <input type="checkbox" name="piece-preview" id="piece-preview">
                                 <label for="piece-preview"></label>
                             </div>
                         </div>
                         <div class="row">
                             <p>Music</p>
                             <div class="check-wrapper">
-                                <input type="checkbox" name="sound" id="music" checked>
+                                <input type="checkbox" name="sound" id="music">
                                 <label for="music"></label>
                             </div>
                         </div>
                         <div class="row">
                             <p>Sound</p>
                             <div class="check-wrapper">
-                                <input type="checkbox" name="sound" id="sound" checked>
+                                <input type="checkbox" name="sound" id="sound">
                                 <label for="sound"></label>
                             </div>
                         </div>
@@ -68,27 +79,27 @@
                     <div class="controls">
                         <div class="row">
                             <p>Rotate Right</p>
-                            <button class="btn small btn-control" data-control="rotate_right">X</button>
+                            <button class="btn small btn-control" data-control="rotate_right"></button>
                         </div>
                         <div class="row">
                             <p>Rotate Left</p>
-                            <button class="btn small btn-control" data-control="rotate_left">Z</button>
+                            <button class="btn small btn-control" data-control="rotate_left"></button>
                         </div>
                         <div class="row">
                             <p>Move Left</p>
-                            <button class="btn small btn-control" data-control="move_left">Left Arrow</button>
+                            <button class="btn small btn-control" data-control="move_left"></button>
                         </div>
                         <div class="row">
                             <p>Move Right</p>
-                            <button class="btn small btn-control" data-control="move_right">Right Arrow</button>
+                            <button class="btn small btn-control" data-control="move_right"></button>
                         </div>
                         <div class="row">
                             <p>Move Down</p>
-                            <button class="btn small btn-control" data-control="move_down">Down Arrow</button>
+                            <button class="btn small btn-control" data-control="move_down"></button>
                         </div>
                         <div class="row">
                             <p>Hard Drop</p>
-                            <button class="btn small btn-control" data-control="hard_drop">Space</button>
+                            <button class="btn small btn-control" data-control="hard_drop"></button>
                         </div>
 
                         <div class="choose-control">

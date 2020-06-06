@@ -7,10 +7,15 @@ import moving from './assets/sound/moving.wav';
 import gameOver from './assets/sound/game-over.wav';
 import lineClear from './assets/sound/line-clear.wav';
 import { sounds } from './controllers/audio';
+import { showOverlay } from './views/overlay';
+import { initPlayer } from './controllers/player';
 import './assets/styles/index.css';
 
 window.addEventListener('DOMContentLoaded', () => {
+    initPlayer();
+
     const smallDevices = window.matchMedia('(max-width: 375px)').matches;
+    const isPlayer = localStorage.getItem('player') || null;
 
     let blockSize = 25;
     const ctx = getCanvas();
@@ -27,4 +32,11 @@ window.addEventListener('DOMContentLoaded', () => {
     sounds.moving.setAttribute('src', moving);
     sounds.gameover.setAttribute('src', gameOver);
     sounds.lineClear.setAttribute('src', lineClear);
+
+    if (!isPlayer) {
+        showOverlay('Add Player');
+    } else {
+        showOverlay('Homescreen');
+    }
+
 });

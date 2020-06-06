@@ -1,33 +1,58 @@
-import { player } from '../models/player_model';
 
 const overlay = document.querySelector('.overlay');
 const header = document.querySelector('.header-title');
 const startScreen = overlay.querySelector('.start-screen');
 
 export function showOverlay(gameState) {
+    const playerInfo = JSON.parse(localStorage.getItem('player'));
     const playBtn = document.querySelector('.start-screen .play-btn');
     const scoreEl = overlay.querySelector('.player-score');
     const highScoreEl = overlay.querySelector('.player-highscore');
-    header.textContent = gameState;
-    
     const newGameBtn = document.querySelector('.new-game');
+    const playerInfoEl = overlay.querySelector('.player-info');
+    const playerInfoScore = overlay.querySelector('.player-info-score span');
+    const playerInfoUsername = overlay.querySelector('.player-info-username');
+    const homeBtn = overlay.querySelector('.home-btn');
+
+    header.textContent = gameState;
+    newGameBtn.style.display = 'block';
+    overlay.style.display = 'flex';
+    
     if (gameState === 'Paused') {
         scoreEl.style.display = 'none';
         highScoreEl.style.display = 'none';
         playBtn.textContent = 'Resume';
         playBtn.style.display = 'block';
-    } else {
+    } else if (gameState === 'Game Over') {
         const score = scoreEl.querySelector('span');
         const highScore = highScoreEl.querySelector('span');
-        score.textContent = player.score;
-        highScore.textContent = player.highScore;
+        playerInfoEl.style.display = 'none';
+        homeBtn.style.display = 'block';
+        score.textContent = playerInfo.score;
+        highScore.textContent = playerInfo.highScore;
         scoreEl.style.display = 'block';
         highScoreEl.style.display = 'block';
         playBtn.style.display = 'none';
-        
+    } else if (gameState === 'Add Player') {
+        const usernameScreen = document.querySelector('.username-screen');
+        playerInfoEl.style.display = 'none';
+        usernameScreen.style.display = 'flex';
+        startScreen.style.display = 'none';
+    } else if (gameState === 'Homescreen') {
+        const usernameScreen = document.querySelector('.username-screen');
+        playerInfoScore.textContent = playerInfo.highScore;
+        playerInfoUsername.textContent = playerInfo.username;
+        scoreEl.style.display = 'none';
+        highScoreEl.style.display = 'none';
+        usernameScreen.style.display = 'none';
+        homeBtn.style.display = 'none';
+        playBtn.style.display = 'block';
+        playBtn.textContent = 'Play';
+        newGameBtn.style.display = 'none';
+        playerInfoEl.style.display = 'flex';
+        startScreen.style.display = 'flex';
+        header.textContent = 'TETRIS';
     }
-    newGameBtn.style.display = 'block';
-    overlay.style.display = 'flex';
 }
 
 export function hideOverlay() {

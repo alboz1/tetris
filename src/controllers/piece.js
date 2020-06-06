@@ -1,7 +1,7 @@
 import { createRect } from '../lib/createRect';
 import { getCanvas } from '../lib/getCanvas';
 import { playerDrop, playerMove, playerRotate, hardDrop } from './player';
-import { player } from '../models/player_model';
+import { player, playerInfo } from '../models/player_model';
 import { grid } from '../models/grid_model';
 import { draw } from '../lib/draw';
 import { showFavicon } from '../views/favicon';
@@ -14,7 +14,7 @@ export function spawnPiece() {
     const ctx = getCanvas();
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     draw(ctx, curPiece, { posX: player.x, posY: player.y });
-    if (player.settings.piecePreview) {
+    if (playerInfo.settings.piecePreview) {
         piecePreview();
     }
 }
@@ -42,7 +42,7 @@ export function reset() {
     //check game over
     if (collide(curPiece, player)) {
         player.gameOver = true;
-        player.highScore = player.score > player.highScore ? player.score : player.highScore;
+        playerInfo.highScore = playerInfo.score > playerInfo.highScore ? playerInfo.score : playerInfo.highScore;
     }
 }
 
@@ -142,18 +142,18 @@ export function getNextPiece() {
 }
 
 export function movePiece(event) {
-    if (player.settings.controls.move_left === event.keyCode) {
+    if (playerInfo.settings.controls.move_left.code === event.keyCode) {
         playerMove(-1);
-    } else if (player.settings.controls.move_right === event.keyCode) {
+    } else if (playerInfo.settings.controls.move_right.code === event.keyCode) {
         playerMove(1);
-    } else if (player.settings.controls.move_down === event.keyCode) {
+    } else if (playerInfo.settings.controls.move_down.code === event.keyCode) {
         event.preventDefault();
         playerDrop(curPiece);
-    } else if (player.settings.controls.rotate_left === event.keyCode) {
+    } else if (playerInfo.settings.controls.rotate_left.code === event.keyCode) {
         playerRotate(curPiece, 1);
-    } else if (player.settings.controls.rotate_right === event.keyCode) {
+    } else if (playerInfo.settings.controls.rotate_right.code === event.keyCode) {
         playerRotate(curPiece, -1);
-    } else if (player.settings.controls.hard_drop === event.keyCode) {
+    } else if (playerInfo.settings.controls.hard_drop.code === event.keyCode) {
         event.preventDefault();
         hardDrop(curPiece);
     }

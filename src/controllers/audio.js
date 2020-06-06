@@ -1,4 +1,4 @@
-import { player } from '../models/player_model';
+import { playerInfo } from '../models/player_model';
 
 export const sounds = {
     background: document.querySelector('#background-music'),
@@ -9,7 +9,7 @@ export const sounds = {
 };
 
 export function playAudio(audio, attrs) {
-    if (!player.settings.sound) return;
+    if (!playerInfo.settings.sound) return;
 
     if (attrs) {
         audio.setAttribute(attrs, '');

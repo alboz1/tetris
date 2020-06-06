@@ -1,5 +1,5 @@
-import { play, playerMove, playerRotate, playerDrop, hardDrop, newGame } from './player';
-import { player } from '../models/player_model';
+import { play, playerMove, playerRotate, playerDrop, hardDrop, newGame, registerPlayer, savePlayerSettings } from './player';
+import { player, playerInfo } from '../models/player_model';
 import { showNextPiece } from '../views/showNextPiece';
 import { movePiece, nextPiece, curPiece } from './piece';
 import { sounds, playAudio, pauseAudio } from './audio';
@@ -11,17 +11,31 @@ export function events() {
     //play/resume button
     const playBtn = document.querySelector('.start-screen .play-btn');
     playBtn.addEventListener('click', () => {
+        if (player.gameOver) {
+            newGame();
+            player.gameOver = false;
+            return;
+        }
+
         //check if player enabled background music
-        if (player.settings.music) {
+        if (playerInfo.settings.music) {
             playAudio(sounds.background, 'loop');
         }
 
-        if (player.settings.pause) {
-            player.settings.pause = false;
+        if (player.pause) {
+            player.pause = false;
         }
         hideOverlay();
         play();
         showNextPiece(nextPiece);
+    });
+
+    //register player
+    const form = document.querySelector('.username-screen form');
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const username = e.target[0].value;
+        registerPlayer(username);
     });
 
     //open options menu
@@ -39,25 +53,28 @@ export function events() {
     //checkbox to hide/show piece preview setting
     const checkbox = document.querySelector('#piece-preview');
     checkbox.addEventListener('change', (e) => {
-        player.settings.piecePreview = e.target.checked;
+        playerInfo.settings.piecePreview = e.target.checked;
+        savePlayerSettings(playerInfo);
     });
-
+    
     //toggle sound
     const soundToggle = document.querySelector('#sound');
     soundToggle.addEventListener('change', (e) => {
-        player.settings.sound = e.target.checked;
+        playerInfo.settings.sound = e.target.checked;
+        savePlayerSettings(playerInfo);
     });
-
+    
     //toggle background music
     const musicToggle = document.querySelector('#music');
     musicToggle.addEventListener('change', (e) => {
-        player.settings.music = e.target.checked;
+        playerInfo.settings.music = e.target.checked;
+        savePlayerSettings(playerInfo);
     });
 
     //pause game
     const pauseBtn = document.querySelector('.pause-btn');
     pauseBtn.addEventListener('click', () => {
-        player.settings.pause = true;
+        player.pause = true;
         pauseAudio(sounds.background);
         showOverlay('Paused');
     });
@@ -65,6 +82,12 @@ export function events() {
     //new game
     const newGameBtn = document.querySelector('.new-game');
     newGameBtn.addEventListener('click', newGame);
+
+    //home button
+    const homeBtn = document.querySelector('.home-btn');
+    homeBtn.addEventListener('click', () => {
+        showOverlay('Homescreen');
+    });
 
     //choose controls
     const controls = document.querySelector('.controls');
@@ -79,6 +102,7 @@ export function events() {
     
     //event to make the key user pressed as a default control for the selected move
     document.addEventListener('keyup', (e) => {
+        e.preventDefault();
         //close panel if escape key is pressed
         if (e.keyCode === 27) {
             closePanel();
@@ -86,8 +110,12 @@ export function events() {
         }
         if (chooseControl.classList.contains('active')) {
             const btnControl = document.querySelector(`[data-control="${selectedControl}"]`);
-            player.settings.controls[btnControl.getAttribute('data-control')] = e.keyCode;
-            btnControl.textContent = e.key === ' ' ? 'Space' : e.key;
+            const keyName = e.key === ' ' ? 'Space' : e.key;
+
+            playerInfo.settings.controls[btnControl.getAttribute('data-control')].code = e.keyCode;
+            playerInfo.settings.controls[btnControl.getAttribute('data-control')].name = keyName;
+            btnControl.textContent = keyName;
+            savePlayerSettings(playerInfo);
             closePanel();
         }
     });
@@ -105,7 +133,7 @@ export function events() {
     });
     
     document.addEventListener('keydown', (e) => {
-        if (player.settings.pause || chooseControl.classList.contains('active')) return;
+        if (player.pause || chooseControl.classList.contains('active')) return;
         movePiece(e);
     });
 
@@ -140,7 +168,7 @@ export function events() {
     let yDown = null;
     let xDown = null;
     canvas.addEventListener('touchmove', (e) => {
-        if (player.settings.pause) return;
+        if (player.pause) return;
         e.preventDefault();
         touchMoved = true;
         const touch = e.changedTouches[0];
