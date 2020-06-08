@@ -10,7 +10,6 @@ export let curPiece = createPiece();
 export let nextPiece = getNextPiece();
 
 export function spawnPiece() {
-    //center piece
     const ctx = getCanvas();
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     draw(ctx, curPiece, { posX: player.x, posY: player.y });

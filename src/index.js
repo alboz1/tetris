@@ -11,6 +11,14 @@ import { showOverlay } from './views/overlay';
 import { initPlayer } from './controllers/player';
 import './assets/styles/index.css';
 
+if('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+        .then(reg => console.log('service worker registered'))
+        .catch(err => console.log('service worker not registered', err));
+    });
+}
+
 window.addEventListener('DOMContentLoaded', () => {
     initPlayer();
 
