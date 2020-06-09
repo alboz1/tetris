@@ -41,7 +41,6 @@ export function reset() {
     //check game over
     if (collide(curPiece, player)) {
         player.gameOver = true;
-        playerInfo.highScore = playerInfo.score > playerInfo.highScore ? playerInfo.score : playerInfo.highScore;
     }
 }
 

@@ -1,4 +1,3 @@
-
 const overlay = document.querySelector('.overlay');
 const header = document.querySelector('.header-title');
 const startScreen = overlay.querySelector('.start-screen');
@@ -17,12 +16,16 @@ export function showOverlay(gameState) {
     header.textContent = gameState;
     newGameBtn.style.display = 'block';
     overlay.style.display = 'flex';
+    playerInfoScore.textContent = playerInfo.highScore;
+    playerInfoUsername.textContent = playerInfo.username;
     
     if (gameState === 'Paused') {
         scoreEl.style.display = 'none';
         highScoreEl.style.display = 'none';
         playBtn.textContent = 'Resume';
         playBtn.style.display = 'block';
+        playerInfoEl.style.display = 'flex';
+        homeBtn.style.display = 'none';
     } else if (gameState === 'Game Over') {
         const score = scoreEl.querySelector('span');
         const highScore = highScoreEl.querySelector('span');
@@ -40,8 +43,6 @@ export function showOverlay(gameState) {
         startScreen.style.display = 'none';
     } else if (gameState === 'Homescreen') {
         const usernameScreen = document.querySelector('.username-screen');
-        playerInfoScore.textContent = playerInfo.highScore;
-        playerInfoUsername.textContent = playerInfo.username;
         scoreEl.style.display = 'none';
         highScoreEl.style.display = 'none';
         usernameScreen.style.display = 'none';

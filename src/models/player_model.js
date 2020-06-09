@@ -5,7 +5,7 @@ export const player = {
     x: (grid[0].length / 2 | 0) - (curPiece[0].length / 2 | 0),
     y: 0,
     gameOver: false,
-    pause: true
+    pause: false
 }
 
 const PlayerModel = {

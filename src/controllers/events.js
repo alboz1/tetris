@@ -1,4 +1,4 @@
-import { play, playerMove, playerRotate, playerDrop, hardDrop, newGame, registerPlayer, savePlayerSettings } from './player';
+import { play, playerMove, playerRotate, playerDrop, hardDrop, newGame, registerPlayer, savePlayer } from './player';
 import { player, playerInfo } from '../models/player_model';
 import { showNextPiece } from '../views/showNextPiece';
 import { movePiece, nextPiece, curPiece } from './piece';
@@ -11,9 +11,10 @@ export function events() {
     //play/resume button
     const playBtn = document.querySelector('.start-screen .play-btn');
     playBtn.addEventListener('click', () => {
-        if (player.gameOver) {
+        if (player.pause) {
+            player.pause = false;
+        } else {
             newGame();
-            player.gameOver = false;
             return;
         }
 
@@ -22,9 +23,6 @@ export function events() {
             playAudio(sounds.background, 'loop');
         }
 
-        if (player.pause) {
-            player.pause = false;
-        }
         hideOverlay();
         play();
         showNextPiece(nextPiece);
@@ -54,21 +52,21 @@ export function events() {
     const checkbox = document.querySelector('#piece-preview');
     checkbox.addEventListener('change', (e) => {
         playerInfo.settings.piecePreview = e.target.checked;
-        savePlayerSettings(playerInfo);
+        savePlayer(playerInfo);
     });
     
     //toggle sound
     const soundToggle = document.querySelector('#sound');
     soundToggle.addEventListener('change', (e) => {
         playerInfo.settings.sound = e.target.checked;
-        savePlayerSettings(playerInfo);
+        savePlayer(playerInfo);
     });
     
     //toggle background music
     const musicToggle = document.querySelector('#music');
     musicToggle.addEventListener('change', (e) => {
         playerInfo.settings.music = e.target.checked;
-        savePlayerSettings(playerInfo);
+        savePlayer(playerInfo);
     });
 
     //pause game
@@ -115,7 +113,7 @@ export function events() {
             playerInfo.settings.controls[btnControl.getAttribute('data-control')].code = e.keyCode;
             playerInfo.settings.controls[btnControl.getAttribute('data-control')].name = keyName;
             btnControl.textContent = keyName;
-            savePlayerSettings(playerInfo);
+            savePlayer(playerInfo);
             closePanel();
         }
     });

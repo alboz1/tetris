@@ -27,7 +27,7 @@ export function playerMove(direction) {
     }
 }
 
-export function savePlayerSettings(player) {
+export function savePlayer(player) {
     localStorage.setItem('player', JSON.stringify(player));
 }
 
@@ -96,8 +96,9 @@ export function addScore(linesCleared) {
     } else if (linesCleared >= 4) {
         playerInfo.score += 1200;
     }
-    savePlayerSettings(playerInfo);
+    playerInfo.highScore = playerInfo.score > playerInfo.highScore ? playerInfo.score : playerInfo.highScore;
     showScore();
+    savePlayer(playerInfo);
 }
 
 
@@ -124,25 +125,23 @@ export function play(time = 0) {
         playerDrop(curPiece);
         dropCounter = 0;
     }
-    
+
     spawnPiece();
     drawBoard({ x: 0, y: 0 });
     requestAnimationFrame(play);
 }
 
 export function newGame() {
-    //reset grid and player's score
+    player.pause = false;
     grid.forEach(row => row.fill(0));
     playerInfo.score = 0;
     player.gameOver = false;
+    savePlayer(playerInfo);
     reset();
     if (playerInfo.settings.music) {
         playAudio(sounds.background, 'loop');
     }
 
-    if (player.pause) {
-        player.pause = false;
-    }
     hideOverlay();
 
     const scoreElement = document.querySelector('#score');
