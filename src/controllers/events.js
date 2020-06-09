@@ -139,9 +139,11 @@ export function events() {
     const progressBar = document.querySelector('.progress-bar-foreground');
     let progress = 0;
     Object.values(sounds).forEach(soundEl => {
-        soundEl.addEventListener('loadedmetadata', () => {
-            progress += 20;
-            progressBar.style.width = `${progress}%`;
+        soundEl.addEventListener('loadeddata', () => {
+            if (soundEl.readyState === 4) {
+                progress += 20;
+                progressBar.style.width = `${progress}%`;
+            }
         });
     });
     progressBar.addEventListener('transitionend', () => {
