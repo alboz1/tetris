@@ -16,8 +16,6 @@ export function showOverlay(gameState) {
     header.textContent = gameState;
     newGameBtn.style.display = 'block';
     overlay.style.display = 'flex';
-    playerInfoScore.textContent = playerInfo.highScore;
-    playerInfoUsername.textContent = playerInfo.username;
     
     if (gameState === 'Paused') {
         scoreEl.style.display = 'none';
@@ -43,6 +41,8 @@ export function showOverlay(gameState) {
         startScreen.style.display = 'none';
     } else if (gameState === 'Homescreen') {
         const usernameScreen = document.querySelector('.username-screen');
+        playerInfoScore.textContent = playerInfo.highScore;
+        playerInfoUsername.textContent = playerInfo.username;
         scoreEl.style.display = 'none';
         highScoreEl.style.display = 'none';
         usernameScreen.style.display = 'none';
