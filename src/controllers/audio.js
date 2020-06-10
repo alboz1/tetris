@@ -51,7 +51,7 @@ export function initAudio() {
         const track = audioCtx.createMediaElementSource(soundEl);
         track.connect(audioCtx.destination);
         if (audioCtx.state === 'suspended') {
-            audioContext.resume();
+            audioCtx.resume();
         }
     });
 }
