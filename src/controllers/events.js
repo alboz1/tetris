@@ -5,7 +5,6 @@ import { movePiece, nextPiece, curPiece } from './piece';
 import { sounds, playAudio, pauseAudio } from './audio';
 import { hideOverlay, showOverlay, goBack, openMenu, openPanel, closePanel } from '../views/overlay';
 import { getDiff } from '../lib/getDiff';
-import { removeLoadingScreen } from '../views/loadingBar';
 
 export function events() {
     //play/resume button
@@ -133,23 +132,6 @@ export function events() {
     document.addEventListener('keydown', (e) => {
         if (player.pause || chooseControl.classList.contains('active')) return;
         movePiece(e);
-    });
-
-    //loading bar
-    const progressBar = document.querySelector('.progress-bar-foreground');
-    let progress = 0;
-    Object.values(sounds).forEach(soundEl => {
-        soundEl.addEventListener('loadeddata', () => {
-            if (soundEl.readyState === 4) {
-                progress += 20;
-                progressBar.style.width = `${progress}%`;
-            }
-        });
-    });
-    progressBar.addEventListener('transitionend', () => {
-        if (progress === 100) {
-            removeLoadingScreen();
-        }
     });
 
     //mobile controls

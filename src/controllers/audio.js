@@ -1,4 +1,9 @@
 import { playerInfo } from '../models/player_model';
+import bgMusic from '../assets/sound/background-music.wav';
+import hit from '../assets/sound/hit.wav';
+import moving from '../assets/sound/moving.wav';
+import gameOver from '../assets/sound/game-over.wav';
+import lineClear from '../assets/sound/line-clear.wav';
 
 export const sounds = {
     background: document.querySelector('#background-music'),
@@ -14,7 +19,7 @@ export function playAudio(audio, attrs) {
     if (attrs) {
         audio.setAttribute(attrs, '');
     }
-    audio.volume = 0.5;
+
     audio
         .play()
         .then(() => {
@@ -32,4 +37,21 @@ export function pauseAudio(audio) {
 export function stopAudio(audio) {
     audio.pause();
     audio.currentTime = 0;
+}
+
+export function initAudio() {
+    sounds.background.setAttribute('src', bgMusic);
+    sounds.hit.setAttribute('src', hit);
+    sounds.moving.setAttribute('src', moving);
+    sounds.gameover.setAttribute('src', gameOver);
+    sounds.lineClear.setAttribute('src', lineClear);
+
+    Object.values(sounds).forEach(soundEl => {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const track = audioCtx.createMediaElementSource(soundEl);
+        track.connect(audioCtx.destination);
+        if (audioCtx.state === 'suspended') {
+            audioContext.resume();
+        }
+    });
 }
