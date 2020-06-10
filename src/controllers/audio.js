@@ -13,9 +13,18 @@ export const sounds = {
     lineClear: document.querySelector('#line-clear-sound')
 };
 
+
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const audioCtx = new AudioContext();
+Object.values(sounds).forEach(soundEl => {
+    const track = audioCtx.createMediaElementSource(soundEl);
+    track.connect(audioCtx.destination);
+});
 export function playAudio(audio, attrs) {
     if (!playerInfo.settings.sound) return;
-
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+    }
     if (attrs) {
         audio.setAttribute(attrs, '');
     }
@@ -45,13 +54,4 @@ export function initAudio() {
     sounds.moving.setAttribute('src', moving);
     sounds.gameover.setAttribute('src', gameOver);
     sounds.lineClear.setAttribute('src', lineClear);
-
-    Object.values(sounds).forEach(soundEl => {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const track = audioCtx.createMediaElementSource(soundEl);
-        track.connect(audioCtx.destination);
-        if (audioCtx.state === 'suspended') {
-            audioCtx.resume();
-        }
-    });
 }
