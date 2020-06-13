@@ -4,7 +4,7 @@
   "description": "tetris game",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --open --config webpack.dev.js --host 192.168.100.8",
+    "start": "webpack-dev-server --open --config webpack.dev.js",
     "watch": "webpack --watch",
     "build": "webpack --config webpack.prod.js"
   },
