@@ -110,13 +110,21 @@
                 <div class="choose-control-overlay"></div>
             </div>
         </section>
+
+        <div class="enable-sound-screen">
+            <p class="enable-sound-text">Do you want to enable sound?</p>
+            <div class="enable-sound-btns">
+                <button class="btn small" data-enable="yes">Yes</button>
+                <button class="btn small" data-enable="no">No</button>
+            </div>
+        </div>
     </main>
 
     <canvas id="favicon-piece" width="16px" height="16px"></canvas>
-    <audio id="background-music"></audio>
-    <audio id="hit-sound"></audio>
-    <audio id="moving-sound"></audio>
-    <audio id="game-over-sound"></audio>
-    <audio id="line-clear-sound"></audio>
+    <audio id="background-music" preload="auto"></audio>
+    <audio id="hit-sound" preload="auto"></audio>
+    <audio id="moving-sound" preload="auto"></audio>
+    <audio id="game-over-sound" preload="auto"></audio>
+    <audio id="line-clear-sound" preload="auto"></audio>
 </body>
 </html>

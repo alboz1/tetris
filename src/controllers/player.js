@@ -139,7 +139,8 @@ export function newGame() {
     savePlayer(playerInfo);
     reset();
     if (playerInfo.settings.music) {
-        playAudio(sounds.background, 'loop');
+        stopAudio(sounds.background);
+        playAudio(sounds.background);
     }
 
     hideOverlay();

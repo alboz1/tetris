@@ -4,6 +4,7 @@ import hit from '../assets/sound/hit.wav';
 import moving from '../assets/sound/moving.wav';
 import gameOver from '../assets/sound/game-over.wav';
 import lineClear from '../assets/sound/line-clear.wav';
+import { savePlayer } from './player';
 
 export const sounds = {
     background: document.querySelector('#background-music'),
@@ -20,15 +21,17 @@ Object.values(sounds).forEach(soundEl => {
     const track = audioCtx.createMediaElementSource(soundEl);
     track.connect(audioCtx.destination);
 });
-export function playAudio(audio, attrs) {
+
+export function playAudio(audio) {
     if (!playerInfo.settings.sound) return;
     if (audioCtx.state === 'suspended') {
         audioCtx.resume();
     }
-    if (attrs) {
-        audio.setAttribute(attrs, '');
-    }
 
+    if (audio.id !== 'background-music') {
+        audio.currentTime = 0;
+    }
+    
     audio
         .play()
         .then(() => {
@@ -36,7 +39,6 @@ export function playAudio(audio, attrs) {
         .catch(error => {
             console.log(error);
         });
-    audio.currentTime = 0;
 }
 
 export function pauseAudio(audio) {
@@ -50,8 +52,19 @@ export function stopAudio(audio) {
 
 export function initAudio() {
     sounds.background.setAttribute('src', bgMusic);
+    sounds.background.setAttribute('loop', 'true');
     sounds.hit.setAttribute('src', hit);
     sounds.moving.setAttribute('src', moving);
     sounds.gameover.setAttribute('src', gameOver);
     sounds.lineClear.setAttribute('src', lineClear);
+}
+
+export function toggleAudio(isEnabled) {
+    const soundToggle = document.querySelector('#sound');
+    const musicToggle = document.querySelector('#music');
+    playerInfo.settings.music = isEnabled;
+    playerInfo.settings.sound = isEnabled;
+    soundToggle.checked = isEnabled;
+    musicToggle.checked = isEnabled;
+    savePlayer(playerInfo);
 }

@@ -96,3 +96,9 @@ export function closePanel() {
     chooseControl.classList.remove('active');
     panelOverlay.classList.remove('active');
 }
+
+//close the enable sound screen
+export function closeScreen() {
+    const enableSoundScreen = document.querySelector('.enable-sound-screen');
+    enableSoundScreen.classList.add('remove');
+}

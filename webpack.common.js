@@ -34,8 +34,8 @@ module.exports = {
             short_name: "Tetris",
             start_url: "/index.html",
             display: "fullscreen",
-            background_color: "#2f3254",
-            theme_color: "#2f3254",
+            background_color: "#1A2433",
+            theme_color: "#1A2433",
             orientation: "portrait-primary",
             ios: true,
             icons: [
@@ -62,6 +62,12 @@ module.exports = {
                     sizes: "144x144",
                     destination: 'assets/icons',
                     purpose: "any maskable"
+                },
+                {
+                    src: path.resolve('src/assets/icons/icon180x180.png'),
+                    sizes: "180x180",
+                    destination: 'assets/icons',
+                    ios: 'startup'
                 },
                 {
                     src: path.resolve('src/assets/icons/icon152x152.png'),

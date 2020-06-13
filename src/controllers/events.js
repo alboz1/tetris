@@ -2,8 +2,8 @@ import { play, playerMove, playerRotate, playerDrop, hardDrop, newGame, register
 import { player, playerInfo } from '../models/player_model';
 import { showNextPiece } from '../views/showNextPiece';
 import { movePiece, nextPiece, curPiece } from './piece';
-import { sounds, playAudio, pauseAudio } from './audio';
-import { hideOverlay, showOverlay, goBack, openMenu, openPanel, closePanel } from '../views/overlay';
+import { sounds, playAudio, pauseAudio, toggleAudio } from './audio';
+import { hideOverlay, showOverlay, goBack, openMenu, openPanel, closePanel, closeScreen } from '../views/overlay';
 import { getDiff } from '../lib/getDiff';
 
 export function events() {
@@ -19,7 +19,7 @@ export function events() {
 
         //check if player enabled background music
         if (playerInfo.settings.music) {
-            playAudio(sounds.background, 'loop');
+            playAudio(sounds.background);
         }
 
         hideOverlay();
@@ -134,6 +134,23 @@ export function events() {
         movePiece(e);
     });
 
+    //enable sound?
+    const enableSoundBtns = document.querySelector('.enable-sound-btns');
+    enableSoundBtns.addEventListener('click', (e) => {
+        console.log(e);
+        const yesBtn = e.target.dataset.enable === 'yes';
+        const noBtn = e.target.dataset.enable === 'no';
+        if (e.target.tagName !== 'BUTTON') return;
+
+        playAudio(sounds.moving);
+        if (yesBtn) {
+            toggleAudio(true);
+        } else if (noBtn) {
+            toggleAudio(false);
+        }
+        closeScreen();
+    });
+
     //mobile controls
     const canvas = document.querySelector('#canvas');
     let prevTouchPosY = 0;
@@ -192,7 +209,7 @@ export function events() {
             //reset after player drops piece and lifts finger
             yDown = null;
         }
-        
+
         if (!touchMoved) {
             playerRotate(curPiece, 1);
         }
