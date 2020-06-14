@@ -24,7 +24,7 @@ Object.values(sounds).forEach(soundEl => {
     }
 });
 
-export function playAudio(audio) {
+export function playAudio(audio, volume = 1) {
     if (!playerInfo.settings.sound) return;
     if (audioCtx.state === 'suspended') {
         audioCtx.resume();
@@ -33,7 +33,7 @@ export function playAudio(audio) {
     if (audio.id !== 'background-music') {
         audio.currentTime = 0;
     }
-    
+    audio.volume = volume;
     audio
         .play()
         .then(() => {

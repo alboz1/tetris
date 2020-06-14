@@ -67,7 +67,7 @@ module.exports = {
                     src: path.resolve('src/assets/icons/icon180x180.png'),
                     sizes: "180x180",
                     destination: 'assets/icons',
-                    ios: 'startup'
+                    ios: true
                 },
                 {
                     src: path.resolve('src/assets/icons/icon152x152.png'),

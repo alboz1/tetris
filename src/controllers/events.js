@@ -142,6 +142,8 @@ export function events() {
         if (e.target.tagName !== 'BUTTON') return;
 
         playAudio(sounds.moving);
+        playAudio(sounds.hit, 0);
+        playAudio(sounds.gameover, 0);
         if (yesBtn) {
             toggleAudio(true);
         } else if (noBtn) {
