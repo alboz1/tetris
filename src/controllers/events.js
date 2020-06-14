@@ -137,7 +137,6 @@ export function events() {
     //enable sound?
     const enableSoundBtns = document.querySelector('.enable-sound-btns');
     enableSoundBtns.addEventListener('click', (e) => {
-        console.log(e);
         const yesBtn = e.target.dataset.enable === 'yes';
         const noBtn = e.target.dataset.enable === 'no';
         if (e.target.tagName !== 'BUTTON') return;

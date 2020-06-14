@@ -18,8 +18,10 @@ export const sounds = {
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioCtx = new AudioContext();
 Object.values(sounds).forEach(soundEl => {
-    const track = audioCtx.createMediaElementSource(soundEl);
-    track.connect(audioCtx.destination);
+    if (soundEl.readyState >= 2) {
+        const track = audioCtx.createMediaElementSource(soundEl);
+        track.connect(audioCtx.destination);
+    }
 });
 
 export function playAudio(audio) {

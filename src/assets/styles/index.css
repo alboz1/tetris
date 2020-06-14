@@ -345,7 +345,7 @@ body {
     align-items: center;
     flex-direction: column;
     color: var(--white);
-    transition: all 0.5s cubic-bezier(.19,.79,.65,.92);
+    transition: all 0.5s ease-out;
 }
 .enable-sound-btns {
     box-sizing: border-box;
@@ -360,7 +360,7 @@ body {
 
 
 .enable-sound-screen.remove {
-    clip-path: circle(0%);
+    transform: translateY(-100%);
 }
 
 /* -------- MEDIA QUERIES -------- */

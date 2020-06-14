@@ -101,4 +101,8 @@ export function closePanel() {
 export function closeScreen() {
     const enableSoundScreen = document.querySelector('.enable-sound-screen');
     enableSoundScreen.classList.add('remove');
+
+    enableSoundScreen.addEventListener('transitionend', (e) => {
+        e.target.style.display = 'none';
+    });
 }
